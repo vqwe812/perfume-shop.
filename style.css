@@ -1,21 +1,56 @@
-/* === АДАПТИВНОЕ МЕНЮ === */
+/* === ШАПКА И НАВИГАЦИЯ === */
+header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* НЕ переносить! */
     gap: 15px;
+}
+
+.logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    font-weight: 600;
+    color: #2c5f2d;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    flex-shrink: 0; /* Не сжимать */
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #97bc62, #2c5f2d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    flex-shrink: 0;
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 15px;
+    gap: clamp(10px, 3vw, 25px);
     align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     margin: 0;
     padding: 0;
+    flex-wrap: nowrap; /* НЕ переносить на одной строке! */
 }
 
 nav li {
@@ -26,56 +61,61 @@ nav li {
 nav a {
     color: #4a4a4a;
     text-decoration: none;
-    font-size: clamp(0.7rem, 2.5vw, 0.813rem);
+    font-size: clamp(0.65rem, 2vw, 0.813rem);
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
     white-space: nowrap;
     padding: 5px 0;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #2c5f2d;
 }
 
 .cart-btn {
     background: linear-gradient(135deg, #2c5f2d, #1e4220);
     color: white;
-    padding: 8px 15px;
+    padding: clamp(6px, 1.5vw, 10px) clamp(12px, 2.5vw, 20px);
     border-radius: 25px;
-    font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+    font-size: clamp(0.65rem, 2vw, 0.75rem);
     font-weight: 500;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.3s ease;
-    text-decoration: none;
     white-space: nowrap;
+}
+
+.cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
 }
 
 /* === МОБИЛЬНАЯ ВЕРСИЯ === */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: row; /* Не вертикально! */
+        flex-wrap: nowrap; /* ВСЕГДА в строку! */
         justify-content: space-between;
-        gap: 10px;
-    }
-    
-    .logo {
-        font-size: 1.3rem;
-        order: 1; /* Логотип слева */
-    }
-    
-    .logo-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
-    
-    nav {
-        order: 2; /* Меню справа */
-        width: auto;
     }
     
     nav ul {
         gap: 8px;
-        justify-content: flex-end;
+        flex-wrap: nowrap; /* НЕ переносить! */
+        overflow-x: auto; /* Прокрутка если не влезает */
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 2px;
+    }
+    
+    /* Скрыть скроллбар */
+    nav ul::-webkit-scrollbar {
+        height: 2px;
+    }
+    
+    nav ul::-webkit-scrollbar-thumb {
+        background: #97bc62;
+        border-radius: 2px;
     }
     
     nav a {
@@ -88,160 +128,20 @@ nav a {
         font-size: 0.65rem;
     }
     
-    /* Скрываем текст корзины на очень маленьких экранах */
+    /* На очень маленьких экранах скрываем текст ссылок, оставляем только корзину */
     @media (max-width: 480px) {
-        .cart-btn span {
+        nav a:not(.cart-btn) {
             display: none;
         }
         
-        nav a:not(.cart-btn) {
-            display: none; /* Скрываем ссылки, оставляем только корзину */
+        .logo {
+            font-size: 1.1rem;
         }
         
-        /* Или делаем гамбургер-меню (опционально) */
-        nav ul {
-            position: fixed;
-            top: 70px;
-            right: -100%;
-            background: white;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            transition: right 0.3s ease;
-            z-index: 99;
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
         }
-        
-        nav ul.active {
-            right: 10px;
-        }
-    }
-}
-
-/* === СТРАНИЦА ТОВАРА (адаптация) === */
-.product-detail-page {
-    padding: 20px 0;
-}
-
-.product-detail {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    padding: 20px;
-    background: white;
-    border-radius: 20px;
-    margin: 20px 0;
-}
-
-.product-detail-image {
-    width: 100%;
-    height: 400px;
-    background: #f8f9fa;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.product-detail-image img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
-
-.product-detail-info h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
-    color: #2c5f2d;
-    margin-bottom: 10px;
-}
-
-.product-detail-price {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    color: #2c5f2d;
-    font-weight: 600;
-    margin: 15px 0;
-}
-
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.quantity-selector button {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #2c5f2d;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #2c5f2d;
-    transition: all 0.3s;
-}
-
-.quantity-selector button:hover {
-    background: #2c5f2d;
-    color: white;
-}
-
-.quantity-selector span {
-    font-size: 1.2rem;
-    font-weight: 600;
-    min-width: 40px;
-    text-align: center;
-}
-
-.add-to-cart-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #2c5f2d, #1e4220);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-/* МОБИЛЬНАЯ ВЕРСИЯ СТРАНИЦЫ ТОВАРА */
-@media (max-width: 768px) {
-    .product-detail {
-        grid-template-columns: 1fr; /* Одна колонка */
-        gap: 20px;
-        padding: 15px;
-    }
-    
-    .product-detail-image {
-        height: 300px;
-    }
-    
-    .quantity-selector {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .product-detail-image {
-        height: 250px;
-    }
-    
-    .quantity-selector button {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    .quantity-selector span {
-        font-size: 1rem;
-    }
-    
-    .add-to-cart-btn {
-        padding: 12px;
-        font-size: 0.9rem;
     }
 }
