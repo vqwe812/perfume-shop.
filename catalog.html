@@ -15,35 +15,6 @@
             color: #4a4a4a;
             line-height: 1.6;
         }
-        
-        header {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 20px 0; box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo {
-            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
-            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
-        }
-        .logo-icon {
-            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 20px;
-        }
-        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
-        nav a {
-            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
-            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
-        }
-        nav a:hover { color: #2c5f2d; }
-        
-        .cart-btn {
-            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white;
-            padding: 12px 25px; border-radius: 25px; font-size: 12px; font-weight: 500;
-            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; text-decoration: none;
-        }
-        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
 
         .page-header { text-align: center; padding: 60px 0 40px; }
         .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #2c5f2d; margin-bottom: 15px; font-weight: 400; }
@@ -170,6 +141,25 @@
 
         footer { background: #2c2c2c; color: #aaa; padding: 40px 0 20px; margin-top: 60px; }
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; }
+        
+        /* Очень маленькие экраны (320px - 480px) */
+        @media (max-width: 480px) {
+            :root {
+                --base-font-size: 14px;
+                --section-padding: 40px;
+                --grid-gap: 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                justify-content: center;
+                gap: 10px;
+            }
+        }
 
         @media (max-width: 768px) {
             .filters { flex-direction: column; align-items: stretch; }
@@ -178,6 +168,20 @@
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
             .modal-body { grid-template-columns: 1fr; }
             .modal-image { height: 300px; }
+        }
+
+        /* Очень большие экраны (1201px - 1440px) */
+        @media (min-width: 1201px) and (max-width: 1440px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+        
+        /* Ultra-wide экраны (1441px+) */
+        @media (min-width: 1441px) {
+            .container {
+                max-width: 1400px;
+            }
         }
     </style>
 </head>
@@ -195,20 +199,15 @@
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html" style="color:#2c5f2d; font-weight:600;">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
-                        <!-- Любимое - текст -->
                         <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
-                        <!-- Корзина - кнопка -->
-                        <li><a href="cart.html" class="cart-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                            </svg>
-                            Корзина <span id="cartCount">(0)</span>
-                        </a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина <span id="cartCount">(0)</span></a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
+
+    
 
     <main class="container">
         <div class="page-header">

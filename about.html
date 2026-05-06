@@ -17,37 +17,7 @@
             line-height: 1.6;
             min-height: 100vh;
         }
-        
-        /* ШАПКА */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo {
-            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
-            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
-        }
-        .logo-icon {
-            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 20px; box-shadow: 0 4px 10px rgba(151, 188, 98, 0.3);
-        }
-        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
-        nav a {
-            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
-            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
-            position: relative; padding: 5px 0;
-        }
-        nav a:hover { color: #2c5f2d; }
-        nav a::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: #97bc62; transition: width 0.3s ease;
-        }
-        nav a:hover::after { width: 100%; }
+
 
         /* === СТИЛИ СТРАНИЦЫ О ПРОЕКТЕ === */
         .page-title {
@@ -224,8 +194,8 @@
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html" style="color:#2c5f2d; font-weight:600;">О магазине</a></li>
-                        <li><a href="favorites.html">Любимое</a></li>
-                        <li><a href="cart.html" style="background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white; padding: 8px 16px; border-radius: 20px;">Корзина</a></li>
+                        <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина <span id="cartCount">(0)</span></a></li>
                     </ul>
                 </nav>
             </div>

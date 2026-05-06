@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PerfumeShop - Парфюмерный магазин</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -58,56 +59,12 @@
             z-index: 100;
         }
         
-        .header-content { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-wrap: wrap;
-            gap: clamp(10px, 2vw, 20px);
-        }
-        
-        .logo {
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: clamp(1.5rem, 4vw, 2rem); 
-            font-weight: 600;
-            color: var(--primary-color); 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: clamp(8px, 1.5vw, 12px);
-            white-space: nowrap;
-        }
-        
-        .logo-icon {
-            width: clamp(35px, 5vw, 40px); 
-            height: clamp(35px, 5vw, 40px); 
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            color: white; 
-            font-size: clamp(16px, 3vw, 20px);
-            flex-shrink: 0;
-        }
-        
         nav ul { 
             display: flex; 
             list-style: none; 
             gap: clamp(15px, 3vw, 35px); 
             align-items: center;
             flex-wrap: wrap;
-        }
-        
-        nav a {
-            color: var(--text-color); 
-            text-decoration: none; 
-            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
-            font-weight: 500;
-            letter-spacing: 1px; 
-            text-transform: uppercase; 
-            transition: all 0.3s ease;
-            white-space: nowrap;
         }
         
         nav a:hover { color: var(--primary-color); }

@@ -17,33 +17,6 @@
             min-height: 100vh;
         }
         
-        header {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            padding: 20px 0; box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo {
-            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
-            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
-        }
-        .logo-icon {
-            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 20px;
-        }
-        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
-        nav a {
-            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
-            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
-        }
-        nav a:hover { color: #2c5f2d; }
-        .cart-btn {
-            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white;
-            padding: 12px 25px; border-radius: 25px; font-size: 12px; font-weight: 500;
-            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; text-decoration: none;
-        }
-
         .page-header { text-align: center; padding: 60px 0 40px; }
         .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #2c5f2d; margin-bottom: 10px; }
         .page-header p { color: #666; }
@@ -125,8 +98,8 @@
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
-                        <li><a href="favorites.html" style="color:#2c5f2d; font-weight:600;">Любимое</a></li>
-                        <li><a href="cart.html" class="cart-btn">🛒 Корзина</a></li>
+                        <li><a href="favorites.html" style="color:#2c5f2d; font-weight:600;">Любимое <span id="favCount">(0)</span></a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина <span id="cartCount">(0)</span></a></li>
                     </ul>
                 </nav>
             </div>
