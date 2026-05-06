@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина | PerfumeShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+            background-attachment: fixed;
+            color: #4a4a4a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: 20px 0; box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08); position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
+            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
+        }
+        .logo-icon {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px;
+        }
+        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
+        nav a {
+            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
+        }
+        nav a:hover { color: #2c5f2d; }
+        .cart-btn {
+            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white;
+            padding: 12px 25px; border-radius: 25px; font-size: 12px; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; text-decoration: none;
+        }
+        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+
+        .page-header { text-align: center; padding: 60px 0 40px; }
+        .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #2c5f2d; margin-bottom: 10px; font-weight: 400; }
+        .page-header p { color: #666; }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 20px 0 80px;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .cart-items h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #2c5f2d;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8f5e9;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto auto auto;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .cart-item-img img { max-width: 80%; max-height: 80%; object-fit: contain; }
+        .cart-item-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .cart-item-brand { font-size: 12px; color: #97bc62; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 2px solid #e8f5e9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #2c5f2d;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-btn:hover { background: #e8f5e9; }
+        .qty-value {
+            width: 40px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c5f2d;
+            border: none;
+            background: transparent;
+        }
+        
+        .cart-item-price {
+            font-size: 20px;
+            color: #2c5f2d;
+            font-weight: 600;
+            text-align: right;
+            min-width: 90px;
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 5px;
+        }
+        .remove-btn:hover { color: #e74c3c; }
+
+        .cart-summary {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .cart-summary h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #2c5f2d;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8f5e9;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+        .summary-row.total {
+            border-top: 2px solid #e8f5e9;
+            margin-top: 15px;
+            padding-top: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c5f2d;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2c5f2d, #1e4220);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s;
+        }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+        .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .promo-code {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .promo-code input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e8f5e9;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .promo-code button {
+            padding: 12px 20px;
+            background: #97bc62;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .promo-code button:hover { background: #85a858; }
+
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+            color: #888;
+            font-size: 18px;
+            grid-column: 1 / -1;
+        }
+        .empty-cart span { font-size: 50px; display: block; margin-bottom: 15px; }
+        .empty-cart a { color: #2c5f2d; text-decoration: none; border-bottom: 1px solid; }
+
+        footer { background: #2c2c2c; color: #aaa; padding: 40px 0 20px; margin-top: 60px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; }
+
+        @media (max-width: 900px) {
+            .cart-layout { grid-template-columns: 1fr; }
+            .cart-summary { position: static; }
+            .cart-item { grid-template-columns: 80px 1fr; gap: 15px; }
+            .cart-item-price { text-align: left; }
+            .quantity-controls { justify-self: start; }
+        }
+        @media (max-width: 600px) {
+            .cart-item { grid-template-columns: 60px 1fr; gap: 10px; }
+            .cart-item-img { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html">Любимое</a></li>
+                        <li><a href="cart.html" class="cart-btn" style="color:#2c5f2d; font-weight:600;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                            Корзина
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Корзина</h1>
+            <p id="cartCountText">Товаров в корзине: 0</p>
+        </div>
+
+        <div class="cart-layout" id="cartLayout">
+            <!-- Содержимое будет сгенерировано через JS -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const cartLayout = document.getElementById('cartLayout');
+        const cartCountText = document.getElementById('cartCountText');
+
+        function getCart() {
+            return JSON.parse(localStorage.getItem('ps_cart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('ps_cart', JSON.stringify(cart));
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            
+            if (cart.length === 0) {
+                cartLayout.innerHTML = `
+                    <div class="empty-cart">
+                        <span>🛒</span>
+                        Ваша корзина пуста.<br>
+                        <a href="catalog.html">Перейти в каталог</a>
+                    </div>
+                `;
+                cartCountText.textContent = 'Товаров в корзине: 0';
+                return;
+            }
+
+            let itemsHTML = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const price = parseInt(item.price);
+                const total = price * item.qty;
+                subtotal += total;
+
+                itemsHTML += `
+                    <div class="cart-item" data-index="${index}">
+                        <div class="cart-item-img">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-brand">${item.brand}</div>
+                            <h3>${item.name}</h3>
+                            <p style="font-size:13px; color:#999; margin-top:5px;">${item.meta || ''}</p>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                            <span class="qty-value">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                        <div class="cart-item-price">${total} BYN</div>
+                        <button class="remove-btn" onclick="removeItem(${index})" title="Удалить">✕</button>
+                    </div>
+                `;
+            });
+
+            const delivery = subtotal >= 100 ? 0 : 15;
+            const grandTotal = subtotal + delivery;
+
+            cartLayout.innerHTML = `
+                <div class="cart-items">
+                    <h2>Ваши товары</h2>
+                    ${itemsHTML}
+                </div>
+                <div class="cart-summary">
+                    <h2>Итого</h2>
+                    <div class="summary-row">
+                        <span>Товары (${cart.reduce((sum, i) => sum + i.qty, 0)} шт.)</span>
+                        <span>${subtotal} BYN</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Доставка</span>
+                        <span style="color:${delivery === 0 ? '#97bc62' : '#4a4a4a'};">
+                            ${delivery === 0 ? 'Бесплатно' : delivery + ' BYN'}
+                        </span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>К оплате</span>
+                        <span>${grandTotal} BYN</span>
+                    </div>
+                    <div class="promo-code">
+                        <input type="text" placeholder="Промокод">
+                        <button>Применить</button>
+                    </div>
+                    <button class="checkout-btn" onclick="alert('Переход к оформлению заказа...')">Оформить заказ</button>
+                    <p style="text-align:center; font-size:12px; color:#999; margin-top:15px;">
+                        Бесплатная доставка от 100 BYN
+                    </p>
+                </div>
+            `;
+
+            cartCountText.textContent = `Товаров в корзине: ${cart.reduce((sum, i) => sum + i.qty, 0)}`;
+        }
+
+        window.changeQty = function(index, delta) {
+            const cart = getCart();
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart(cart);
+            renderCart();
+            updateCartCountOnAllPages();
+        };
+
+        window.removeItem = function(index) {
+            const cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+            renderCart();
+            updateCartCountOnAllPages();
+        };
+
+        function updateCartCountOnAllPages() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            localStorage.setItem('ps_cart_count', totalItems);
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'ps_cart') renderCart();
+        });
+
+        renderCart();
+    </script>
+
+</body>
+</html>

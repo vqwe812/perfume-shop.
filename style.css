@@ -1,0 +1,31 @@
+/* Базовые размеры (будут меняться через media queries) */
+            --base-font-size: 16px;
+            --container-max-width: 1200px;
+            --section-padding: 80px;
+            --grid-gap: 30px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            font-size: var(--base-font-size);
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Контейнер с резиновой шириной */
+        .container { 
+            width: 100%;
+            max-width: var(--container-max-width); 
+            margin: 0 auto; 
+            padding: 0 clamp(15px, 3vw, 30px); 
+        }

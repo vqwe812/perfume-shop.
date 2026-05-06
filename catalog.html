@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог | PerfumeShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+            background-attachment: fixed;
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: 20px 0; box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
+            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
+        }
+        .logo-icon {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px;
+        }
+        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
+        nav a {
+            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
+        }
+        nav a:hover { color: #2c5f2d; }
+        
+        .cart-btn {
+            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white;
+            padding: 12px 25px; border-radius: 25px; font-size: 12px; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; text-decoration: none;
+        }
+        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+
+        .page-header { text-align: center; padding: 60px 0 40px; }
+        .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #2c5f2d; margin-bottom: 15px; font-weight: 400; }
+        .page-header p { color: #666; font-size: 16px; }
+
+        .filters {
+            background: white; padding: 25px 30px; border-radius: 20px; margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+        }
+        .filter-group { display: flex; flex-direction: column; gap: 8px; }
+        .filter-group label { font-size: 12px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .filter-group select, .filter-group input {
+            padding: 10px 15px; border: 2px solid #e8f5e9; border-radius: 10px;
+            font-family: 'Montserrat', sans-serif; font-size: 14px; background: white; cursor: pointer; transition: border-color 0.3s;
+        }
+        .filter-group select:hover, .filter-group input:hover { border-color: #97bc62; }
+        .search-box { flex: 1; min-width: 250px; }
+        .search-box input { width: 100%; padding: 12px 20px; border: 2px solid #e8f5e9; border-radius: 25px; font-size: 14px; }
+        .results-count { text-align: center; margin: 20px 0; color: #666; font-size: 14px; }
+        .no-results { text-align: center; padding: 60px 20px; color: #888; font-size: 18px; display: none; }
+        .no-results.show { display: block; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 20px 0 60px; }
+        .product-card {
+            background: white; border-radius: 20px; padding: 25px; text-align: center;
+            transition: all 0.4s ease; border: 1px solid rgba(151, 188, 98, 0.2);
+            position: relative; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); cursor: pointer;
+        }
+        .product-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #97bc62, #2c5f2d); transform: scaleX(0); transition: transform 0.4s ease;
+        }
+        .product-card:hover::before { transform: scaleX(1); }
+        .product-card:hover { transform: translateY(-15px); box-shadow: 0 20px 50px rgba(44, 95, 45, 0.15); }
+        .product-card.hidden { display: none; }
+        .product-image {
+            width: 100%; height: 280px; background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .product-image img { max-width: 90%; max-height: 90%; object-fit: contain; transition: transform 0.4s ease; }
+        .product-card:hover .product-image img { transform: scale(1.08); }
+        
+        .product-badge {
+            position: absolute; top: 15px; right: 15px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
+            color: white; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 600; text-transform: uppercase; z-index: 2;
+        }
+        .product-badge.new { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .product-badge.sale { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        
+        /* КНОПКА ИЗБРАННОГО */
+        .fav-btn {
+            position: absolute; top: 15px; left: 15px;
+            width: 40px; height: 40px; background: white; border: 2px solid #e8f5e9;
+            border-radius: 50%; cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; z-index: 3; color: #ccc;
+        }
+        .fav-btn:hover { border-color: #e74c3c; color: #e74c3c; transform: scale(1.1); }
+        .fav-btn.active { background: #fff0f0; border-color: #e74c3c; color: #e74c3c; }
+        
+        .product-brand { font-size: 12px; color: #97bc62; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .product-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #333; margin-bottom: 8px; }
+        .product-meta { font-size: 12px; color: #999; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .price { font-size: 26px; color: #2c5f2d; font-weight: 600; margin-bottom: 20px; }
+        .old-price { font-size: 16px; color: #999; text-decoration: line-through; margin-left: 10px; font-weight: 400; }
+        
+        .add-to-cart {
+            padding: 12px 30px; background: transparent; color: #2c5f2d; border: 2px solid #2c5f2d;
+            border-radius: 25px; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s ease; width: 100%;
+        }
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white; transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; border-radius: 25px; max-width: 900px; width: 100%; max-height: 90vh;
+            overflow-y: auto; position: relative; animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-close { position: absolute; top: 20px; right: 25px; background: none; border: none; font-size: 32px; cursor: pointer; color: #888; z-index: 10; }
+        .modal-close:hover { color: #2c5f2d; }
+        .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; }
+        .modal-image { background: #f8f9fa; border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 30px; height: 450px; position: relative; }
+        .modal-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .modal-fav-btn {
+            position: absolute; top: 20px; left: 20px;
+            width: 44px; height: 44px; background: white; border: 2px solid #e8f5e9;
+            border-radius: 50%; cursor: pointer; font-size: 22px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; z-index: 10; color: #ccc;
+        }
+        .modal-fav-btn:hover { border-color: #e74c3c; color: #e74c3c; transform: scale(1.1); }
+        .modal-fav-btn.active { background: #fff0f0; border-color: #e74c3c; color: #e74c3c; }
+
+        .modal-brand { font-size: 14px; color: #97bc62; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+        .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #2c5f2d; margin-bottom: 15px; }
+        .modal-price { font-size: 32px; color: #2c5f2d; font-weight: 600; margin-bottom: 25px; }
+        .modal-origin { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #f0f0f0; }
+        .modal-origin strong { color: #2c5f2d; font-size: 15px; }
+        .modal-desc { font-size: 15px; line-height: 1.8; color: #555; margin-bottom: 30px; }
+        .fragrance-pyramid h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #2c5f2d; margin-bottom: 20px; }
+        .note-level { background: #f8faf7; padding: 15px 20px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #97bc62; }
+        .note-level h4 { font-size: 13px; color: #2c5f2d; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; letter-spacing: 0.5px; }
+        .note-level p { font-size: 14px; color: #666; margin: 0; }
+        .modal-cart-btn {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, #2c5f2d, #1e4220);
+            color: white; border: none; border-radius: 25px; font-size: 14px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; margin-top: 25px; transition: all 0.3s;
+        }
+        .modal-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+
+        footer { background: #2c2c2c; color: #aaa; padding: 40px 0 20px; margin-top: 60px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; }
+
+        @media (max-width: 768px) {
+            .filters { flex-direction: column; align-items: stretch; }
+            .filter-group { width: 100%; }
+            .search-box { width: 100%; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .modal-body { grid-template-columns: 1fr; }
+            .modal-image { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html" style="color:#2c5f2d; font-weight:600;">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <!-- Любимое - текст -->
+                        <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
+                        <!-- Корзина - кнопка -->
+                        <li><a href="cart.html" class="cart-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                            Корзина <span id="cartCount">(0)</span>
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Каталог парфюмерии</h1>
+            <p>Более 500 оригинальных ароматов от мировых брендов</p>
+        </div>
+
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по названию или бренду...">
+            </div>
+            <div class="filter-group">
+                <label>Бренд</label>
+                <select id="brandFilter">
+                    <option value="all">Все бренды</option>
+                    <option value="Dior">Dior</option>
+                    <option value="Chanel">Chanel</option>
+                    <option value="Yves Saint Laurent">Yves Saint Laurent</option>
+                    <option value="Tom Ford">Tom Ford</option>
+                    <option value="Lancôme">Lancôme</option>
+                    <option value="Giorgio Armani">Giorgio Armani</option>
+                    <option value="Paco Rabanne">Paco Rabanne</option>
+                    <option value="Viktor&Rolf">Viktor&Rolf</option>
+                    <option value="Penhaligon's">Penhaligon's</option>
+                    <option value="Versace">Versace</option>
+                    <option value="Carolina Herrera">Carolina Herrera</option>
+                    <option value="Jean Paul Gaultier">Jean Paul Gaultier</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Пол</label>
+                <select id="genderFilter">
+                    <option value="all">Все</option>
+                    <option value="women">Женские</option>
+                    <option value="men">Мужские</option>
+                    <option value="unisex">Унисекс</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Сортировка</label>
+                <select id="sortFilter">
+                    <option value="default">По популярности</option>
+                    <option value="price-asc">По цене (возрастание)</option>
+                    <option value="price-desc">По цене (убывание)</option>
+                    <option value="name">По названию</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="results-count" id="resultsCount">Показано товаров: 12</div>
+        <div class="no-results" id="noResults">😔 По вашему запросу ничего не найдено</div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Товар 1 -->
+            <div class="product-card" data-name="Dior Sauvage Elixir" data-brand="Dior" data-price="410" data-image="img/dior-sauvage.jpg" data-origin="🇫🇷 Франция" data-desc="Эликсир концентрации для мужчин. Глубокий, чувственный и магнетический. Сочетание пряных, древесных и амбровых нот создаёт шлейф, который невозможно забыть." data-notes-top="Грейпфрут, корица, мускатный орех" data-notes-mid="Лаванда, кардамон, герань" data-notes-base="Ваниль, пачули, сандал, амбра" data-gender="men">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Dior Sauvage Elixir', 'Dior', '410', 'img/dior-sauvage.jpg')">♡</button>
+                    <span class="product-badge">Хит</span>
+                    <img src="img/dior-sauvage.jpg" alt="Dior Sauvage">
+                </div>
+                <div class="product-brand">Dior</div>
+                <h3>Sauvage Elixir</h3>
+                <p class="product-meta">EDP • 60 мл</p>
+                <div class="price">410 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Dior Sauvage Elixir', 'Dior', '410', 'img/dior-sauvage.jpg', 'EDP • 60 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 2 -->
+            <div class="product-card" data-name="Chanel Coco Mademoiselle" data-brand="Chanel" data-price="445" data-image="img/chanel-coco.jpg" data-origin="🇫🇷 Франция" data-desc="Свежий и дерзкий аромат для современной женщины. Цитрусовая свежесть переплетается с нежностью жасмина и теплотой пачули, создавая идеальный баланс между лёгкостью и чувственностью." data-notes-top="Апельсин, бергамот, грейпфрут" data-notes-mid="Роза, жасмин, личи" data-notes-base="Пачули, ветивер, ваниль, белый мускус" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Chanel Coco Mademoiselle', 'Chanel', '445', 'img/chanel-coco.jpg')">♡</button>
+                    <img src="img/chanel-coco.jpg" alt="Chanel Coco Mademoiselle">
+                </div>
+                <div class="product-brand">Chanel</div>
+                <h3>Coco Mademoiselle</h3>
+                <p class="product-meta">EDP • 100 мл</p>
+                <div class="price">445 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Chanel Coco Mademoiselle', 'Chanel', '445', 'img/chanel-coco.jpg', 'EDP • 100 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 3 -->
+            <div class="product-card" data-name="YSL Black Opium" data-brand="Yves Saint Laurent" data-price="365" data-image="img/ysl-black-opium.jpg" data-origin="🇫 Франция" data-desc="Смелый, рок-н-ролльный аромат. Кофейные ноты сплетаются с ванилью и белыми цветами, создавая притягательную энергию ночи. Идеален для тех, кто не боится быть в центре внимания." data-notes-top="Розовый перец, груша, бергамот" data-notes-mid="Кофе, жасмин, фрезия" data-notes-base="Ваниль, пачули, кедр" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'YSL Black Opium', 'Yves Saint Laurent', '365', 'img/ysl-black-opium.jpg')">♡</button>
+                    <span class="product-badge new">New</span>
+                    <img src="img/ysl-black-opium.jpg" alt="YSL Black Opium">
+                </div>
+                <div class="product-brand">Yves Saint Laurent</div>
+                <h3>Black Opium</h3>
+                <p class="product-meta">EDP • 90 мл</p>
+                <div class="price">365 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'YSL Black Opium', 'Yves Saint Laurent', '365', 'img/ysl-black-opium.jpg', 'EDP • 90 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 4 -->
+            <div class="product-card" data-name="Tom Ford Black Orchid" data-brand="Tom Ford" data-price="480" data-image="img/tom-ford-orchid.jpg" data-origin="🇺🇸 США" data-desc="Роскошный и загадочный унисекс-аромат. Трюфель и чёрная орхидея создают тёмную, бархатистую базу, которая раскрывается тёплыми пряными и древесными аккордами." data-notes-top="Трюфель, садовая гардения, чёрная смородина, бергамот, юзу, жасмин" data-notes-mid="Орхидея, специи, лотос, древесные ноты" data-notes-base="Пачули, сандал, шоколад, ваниль" data-gender="unisex">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Tom Ford Black Orchid', 'Tom Ford', '480', 'img/tom-ford-orchid.jpg')">♡</button>
+                    <span class="product-badge sale">-15%</span>
+                    <img src="img/tom-ford-orchid.jpg" alt="Tom Ford Black Orchid">
+                </div>
+                <div class="product-brand">Tom Ford</div>
+                <h3>Black Orchid</h3>
+                <p class="product-meta">EDP • 50 мл</p>
+                <div class="price">480 BYN <span class="old-price">565 BYN</span></div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Tom Ford Black Orchid', 'Tom Ford', '480', 'img/tom-ford-orchid.jpg', 'EDP • 50 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 5 -->
+            <div class="product-card" data-name="Lancôme La Vie Est Belle" data-brand="Lancôme" data-price="395" data-image="img/lancome-vie-est-belle.jpg" data-origin="🇫🇷 Франция" data-desc="Гимн женской свободе и счастью. Ирисовая пудра, сладкий пралине и тёплая ваниль создают ощущение объятий, а жасмин добавляет цветочную лёгкость." data-notes-top="Чёрная смородина, груша" data-notes-mid="Ирис, жасмин, флердоранж" data-notes-base="Пралине, ваниль, пачули, бобы тонка" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Lancôme La Vie Est Belle', 'Lancôme', '395', 'img/lancome-vie-est-belle.jpg')">♡</button>
+                    <img src="img/lancome-vie-est-belle.jpg" alt="Lancôme La Vie Est Belle">
+                </div>
+                <div class="product-brand">Lancôme</div>
+                <h3>La Vie Est Belle</h3>
+                <p class="product-meta">EDP • 100 мл</p>
+                <div class="price">395 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Lancôme La Vie Est Belle', 'Lancôme', '395', 'img/lancome-vie-est-belle.jpg', 'EDP • 100 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 6 -->
+            <div class="product-card" data-name="Armani Acqua di Giò" data-brand="Giorgio Armani" data-price="340" data-image="img/armani-acqua-gio.jpg" data-origin="🇮🇹 Италия" data-desc="Легендарный морской аромат, вдохновлённый островом Пантеллерия. Свежесть цитрусов и морских нот плавно переходит в тёплую древесную базу. Классика мужской элегантности." data-notes-top="Лайм, лимон, бергамот, жасмин, мандарин" data-notes-mid="Морские ноты, розмарин, хурма, фрезия, кориандр" data-notes-base="Мускус, кедр, дубовый мох, пачули" data-gender="men">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Armani Acqua di Giò', 'Giorgio Armani', '340', 'img/armani-acqua-gio.jpg')">♡</button>
+                    <span class="product-badge">Хит</span>
+                    <img src="img/armani-acqua-gio.jpg" alt="Armani Acqua di Giò">
+                </div>
+                <div class="product-brand">Giorgio Armani</div>
+                <h3>Acqua di Giò</h3>
+                <p class="product-meta">EDT • 100 мл</p>
+                <div class="price">340 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Armani Acqua di Giò', 'Giorgio Armani', '340', 'img/armani-acqua-gio.jpg', 'EDT • 100 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 7 -->
+            <div class="product-card" data-name="Paco Rabanne 1 Million" data-brand="Paco Rabanne" data-price="325" data-image="img/paco-rabanne-1million.jpg" data-origin="🇪🇸 Испания" data-desc="Дерзкий, золотой аромат для мужчин, которые живут на полную. Кровяной мандарин и золотая кожа создают яркий старт, а амбра и дерево добавляют глубины." data-notes-top="Кровяной мандарин, грейпфрут, мята" data-notes-mid="Роза, корица, специи" data-notes-base="Кожа, древесные ноты, индийские пачули, амбра" data-gender="men">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Paco Rabanne 1 Million', 'Paco Rabanne', '325', 'img/paco-rabanne-1million.jpg')">♡</button>
+                    <img src="img/paco-rabanne-1million.jpg" alt="Paco Rabanne 1 Million">
+                </div>
+                <div class="product-brand">Paco Rabanne</div>
+                <h3>1 Million</h3>
+                <p class="product-meta">EDT • 100 мл</p>
+                <div class="price">325 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Paco Rabanne 1 Million', 'Paco Rabanne', '325', 'img/paco-rabanne-1million.jpg', 'EDT • 100 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 8 -->
+            <div class="product-card" data-name="Viktor&Rolf Flowerbomb" data-brand="Viktor&Rolf" data-price="420" data-image="img/viktor-rolf-flowerbomb.jpg" data-origin="🇫 Франция" data-desc="Взрывной цветочный аромат. Чайный лист и бергамот встречают роскошный букет из жасмина, розы и орхидеи, который растворяется в тёплом пачули." data-notes-top="Чай, бергамот" data-notes-mid="Жасмин, роза, орхидея, фрезия" data-notes-base="Пачули, мускус" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Viktor&Rolf Flowerbomb', 'Viktor&Rolf', '420', 'img/viktor-rolf-flowerbomb.jpg')">♡</button>
+                    <span class="product-badge new">New</span>
+                    <img src="img/viktor-rolf-flowerbomb.jpg" alt="Viktor&Rolf Flowerbomb">
+                </div>
+                <div class="product-brand">Viktor&Rolf</div>
+                <h3>Flowerbomb</h3>
+                <p class="product-meta">EDP • 100 мл</p>
+                <div class="price">420 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Viktor&Rolf Flowerbomb', 'Viktor&Rolf', '420', 'img/viktor-rolf-flowerbomb.jpg', 'EDP • 100 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 9 -->
+            <div class="product-card" data-name="Penhaligon's Thermopylae" data-brand="Penhaligon's" data-price="520" data-image="img/thermopylae.jpg" data-origin="🇬🇧 Великобритания" data-desc="Нишевый аромат, вдохновлённый древнегреческими битвами. Зелёный кардамон и можжевельник открываются пряным имбирём и завершаются дымным пачули и сандалом." data-notes-top="Можжевельник, бергамот, лаванда" data-notes-mid="Имбирь, кориандр, герань" data-notes-base="Пачули, сандал, амбра, мускус" data-gender="unisex">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Penhaligon\'s Thermopylae', 'Penhaligon\'s', '520', 'img/thermopylae.jpg')">♡</button>
+                    <img src="img/thermopylae.jpg" alt="Thermopylae">
+                </div>
+                <div class="product-brand">Penhaligon's</div>
+                <h3>Thermopylae</h3>
+                <p class="product-meta">EDP • 75 мл</p>
+                <div class="price">520 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Penhaligon\'s Thermopylae', 'Penhaligon\'s', '520', 'img/thermopylae.jpg', 'EDP • 75 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 10 -->
+            <div class="product-card" data-name="Versace Crystal Noir" data-brand="Versace" data-price="310" data-image="img/versace-crystal-noir.jpg" data-origin="🇮🇹 Италия" data-desc="Таинственный и чувственный. Кокос и гардения создают сливочную, обволакивающую сердцевину, а сандал и амбра оставляют тёплый, манящий шлейф." data-notes-top="Имбирь, кардамон, перец" data-notes-mid="Гардения, пион, кокос, апельсин" data-notes-base="Сандал, амбра, мускус" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Versace Crystal Noir', 'Versace', '310', 'img/versace-crystal-noir.jpg')">♡</button>
+                    <span class="product-badge sale">-20%</span>
+                    <img src="img/versace-crystal-noir.jpg" alt="Versace Crystal Noir">
+                </div>
+                <div class="product-brand">Versace</div>
+                <h3>Crystal Noir</h3>
+                <p class="product-meta">EDP • 90 мл</p>
+                <div class="price">310 BYN <span class="old-price">390 BYN</span></div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Versace Crystal Noir', 'Versace', '310', 'img/versace-crystal-noir.jpg', 'EDP • 90 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 11 -->
+            <div class="product-card" data-name="Carolina Herrera Good Girl" data-brand="Carolina Herrera" data-price="385" data-image="img/carolina-herrera-good-girl.jpg" data-origin="🇪 Испания" data-desc="Двойственная природа женщины в одном флаконе. Тубероза и жасмин встречаются с какао и бобами тонка, создавая контраст невинности и соблазна." data-notes-top="Миндаль, кофе" data-notes-mid="Тубероза, жасмин самбак, апельсиновый цвет" data-notes-base="Какао, бобы тонка, сандал, пралине" data-gender="women">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Carolina Herrera Good Girl', 'Carolina Herrera', '385', 'img/carolina-herrera-good-girl.jpg')">♡</button>
+                    <img src="img/carolina-herrera-good-girl.jpg" alt="Carolina Herrera Good Girl">
+                </div>
+                <div class="product-brand">Carolina Herrera</div>
+                <h3>Good Girl</h3>
+                <p class="product-meta">EDP • 80 мл</p>
+                <div class="price">385 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Carolina Herrera Good Girl', 'Carolina Herrera', '385', 'img/carolina-herrera-good-girl.jpg', 'EDP • 80 мл')">В корзину</button>
+            </div>
+
+            <!-- Товар 12 -->
+            <div class="product-card" data-name="Jean Paul Gaultier Le Male" data-brand="Jean Paul Gaultier" data-price="355" data-image="img/jean-paul-gaultier.jpg" data-origin="🇫🇷 Франция" data-desc="Культовый мужской аромат. Лаванда и мята дарят свежесть, а ваниль и амбра создают тёплую, обволакивающую базу. Узнаваемый с первой секунды." data-notes-top="Лаванда, мята, бергамот, арника" data-notes-mid="Корица, тмин, герань, флердоранж" data-notes-base="Ваниль, сандал, кедр, амбра, табак" data-gender="men">
+                <div class="product-image">
+                    <button class="fav-btn" onclick="toggleFavorite(event, 'Jean Paul Gaultier Le Male', 'Jean Paul Gaultier', '355', 'img/jean-paul-gaultier.jpg')">♡</button>
+                    <span class="product-badge">Хит</span>
+                    <img src="img/jean-paul-gaultier.jpg" alt="Jean Paul Gaultier Le Male">
+                </div>
+                <div class="product-brand">Jean Paul Gaultier</div>
+                <h3>Le Male</h3>
+                <p class="product-meta">EDT • 125 мл</p>
+                <div class="price">355 BYN</div>
+                <button class="add-to-cart" onclick="addToCart(event, 'Jean Paul Gaultier Le Male', 'Jean Paul Gaultier', '355', 'img/jean-paul-gaultier.jpg', 'EDT • 125 мл')">В корзину</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <button class="modal-fav-btn" onclick="toggleFavoriteFromModal()" title="В избранное">♡</button>
+                    <img id="modalImg" src="" alt="">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-brand" id="modalBrand"></div>
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <div class="modal-price" id="modalPrice"></div>
+                    <div class="modal-origin"><strong>Страна производства:</strong> <span id="modalOrigin"></span></div>
+                    <div class="modal-desc" id="modalDesc"></div>
+                    <div class="fragrance-pyramid">
+                        <h3>🌸 Пирамида аромата</h3>
+                        <div class="note-level"><h4>Верхние ноты</h4><p id="modalNotesTop"></p></div>
+                        <div class="note-level"><h4>Средние ноты</h4><p id="modalNotesMid"></p></div>
+                        <div class="note-level"><h4>Базовые ноты</h4><p id="modalNotesBase"></p></div>
+                    </div>
+                    <button class="modal-cart-btn" onclick="addToCartFromModal()">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === ЛОГИКА ИЗБРАННОГО ===
+        let favorites = JSON.parse(localStorage.getItem('ps_favorites')) || [];
+
+        function toggleFavorite(event, name, brand, price, image) {
+            event.stopPropagation(); // Чтобы не открывалось модальное окно
+            
+            const index = favorites.findIndex(item => item.name === name);
+            
+            if (index > -1) {
+                favorites.splice(index, 1); // Удалить
+            } else {
+                favorites.push({ name, brand, price, image }); // Добавить
+            }
+            
+            localStorage.setItem('ps_favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+
+        function toggleFavoriteFromModal() {
+            const name = document.getElementById('modalTitle').textContent;
+            const brand = document.getElementById('modalBrand').textContent;
+            const price = document.getElementById('modalPrice').textContent.replace(' BYN', '');
+            const image = document.getElementById('modalImg').src;
+            
+            const index = favorites.findIndex(item => item.name === name);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push({ name, brand, price, image });
+            }
+            
+            localStorage.setItem('ps_favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+
+        function updateFavoritesUI() {
+            // Обновить счетчик в шапке
+            document.getElementById('favCount').textContent = '(' + favorites.length + ')';
+            
+            // Обновить сердечки на карточках
+            document.querySelectorAll('.product-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                const btn = card.querySelector('.fav-btn');
+                const modalBtn = document.querySelector('.modal-fav-btn'); 
+                
+                const isFav = favorites.some(item => item.name === name);
+                
+                if (btn) {
+                    btn.innerHTML = isFav ? '💚' : '♡';
+                    if(isFav) btn.classList.add('active'); else btn.classList.remove('active');
+                }
+                
+                if(modalBtn) {
+                    modalBtn.innerHTML = isFav ? '💚' : '♡';
+                    if(isFav) modalBtn.classList.add('active'); else modalBtn.classList.remove('active');
+                }
+            });
+        }
+
+        // === ЛОГИКА КОРЗИНЫ ===
+        function addToCart(event, name, brand, price, image, meta) {
+            event.stopPropagation();
+            let cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) existingItem.qty += 1;
+            else cart.push({ name, brand, price, image, meta, qty: 1 });
+            
+            localStorage.setItem('ps_cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(name + ' добавлен в корзину!');
+        }
+
+        function addToCartFromModal() {
+            const name = document.getElementById('modalTitle').textContent;
+            const brand = document.getElementById('modalBrand').textContent;
+            const price = document.getElementById('modalPrice').textContent.replace(' BYN', '');
+            const image = document.getElementById('modalImg').src;
+            addToCart({ stopPropagation: () => {} }, name, brand, price, image, '');
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').textContent = '(' + totalItems + ')';
+        }
+
+        // === МОДАЛЬНОЕ ОКНО ===
+        const modal = document.getElementById('productModal');
+        const closeBtn = document.querySelector('.modal-close');
+        
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Не открывать если кликнули на кнопки
+                if (e.target.classList.contains('add-to-cart') || e.target.classList.contains('fav-btn')) return;
+                
+                const data = card.dataset;
+                document.getElementById('modalImg').src = data.image;
+                document.getElementById('modalImg').alt = data.name;
+                document.getElementById('modalBrand').textContent = data.brand.toUpperCase();
+                document.getElementById('modalTitle').textContent = data.name;
+                document.getElementById('modalPrice').textContent = data.price + ' BYN';
+                document.getElementById('modalOrigin').textContent = data.origin;
+                document.getElementById('modalDesc').textContent = data.desc;
+                document.getElementById('modalNotesTop').textContent = data.notesTop;
+                document.getElementById('modalNotesMid').textContent = data.notesMid;
+                document.getElementById('modalNotesBase').textContent = data.notesBase;
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+        // === ФИЛЬТРАЦИЯ ===
+        const searchInput = document.getElementById('searchInput');
+        const brandFilter = document.getElementById('brandFilter');
+        const genderFilter = document.getElementById('genderFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const productsGrid = document.getElementById('productsGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        const noResults = document.getElementById('noResults');
+        const productCards = document.querySelectorAll('.product-card');
+
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedBrand = brandFilter.value;
+            const selectedGender = genderFilter.value;
+            const sortType = sortFilter.value;
+            let visibleCount = 0;
+
+            productCards.forEach(card => {
+                const brand = card.getAttribute('data-brand');
+                const gender = card.getAttribute('data-gender');
+                const name = card.getAttribute('data-name').toLowerCase();
+                
+                const matchesSearch = name.includes(searchTerm) || brand.toLowerCase().includes(searchTerm);
+                const matchesBrand = selectedBrand === 'all' || brand === selectedBrand;
+                const matchesGender = selectedGender === 'all' || gender === selectedGender;
+
+                if (matchesSearch && matchesBrand && matchesGender) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            if (sortType !== 'default') {
+                const products = Array.from(productsGrid.children);
+                products.sort((a, b) => {
+                    if (sortType === 'price-asc') return parseInt(a.getAttribute('data-price')) - parseInt(b.getAttribute('data-price'));
+                    if (sortType === 'price-desc') return parseInt(b.getAttribute('data-price')) - parseInt(a.getAttribute('data-price'));
+                    if (sortType === 'name') return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'));
+                    return 0;
+                });
+                products.forEach(p => productsGrid.appendChild(p));
+            }
+
+            resultsCount.textContent = 'Показано товаров: ' + visibleCount;
+            noResults.classList.toggle('show', visibleCount === 0);
+        }
+
+        searchInput.addEventListener('input', filterProducts);
+        brandFilter.addEventListener('change', filterProducts);
+        genderFilter.addEventListener('change', filterProducts);
+        sortFilter.addEventListener('change', filterProducts);
+        filterProducts();
+
+        // Инициализация
+        updateFavoritesUI();
+        updateCartCount();
+    </script>
+</body>
+</html>

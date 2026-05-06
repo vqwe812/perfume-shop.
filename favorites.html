@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Любимое | PerfumeShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+            background-attachment: fixed;
+            color: #4a4a4a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            padding: 20px 0; box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo {
+            font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
+            color: #2c5f2d; text-decoration: none; display: flex; align-items: center; gap: 12px;
+        }
+        .logo-icon {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #97bc62, #2c5f2d);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px;
+        }
+        nav ul { display: flex; list-style: none; gap: 35px; align-items: center; }
+        nav a {
+            color: #4a4a4a; text-decoration: none; font-size: 13px; font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;
+        }
+        nav a:hover { color: #2c5f2d; }
+        .cart-btn {
+            background: linear-gradient(135deg, #2c5f2d, #1e4220); color: white;
+            padding: 12px 25px; border-radius: 25px; font-size: 12px; font-weight: 500;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; text-decoration: none;
+        }
+
+        .page-header { text-align: center; padding: 60px 0 40px; }
+        .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: #2c5f2d; margin-bottom: 10px; }
+        .page-header p { color: #666; }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding: 20px 0 80px;
+        }
+        .fav-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .fav-card:hover { transform: translateY(-5px); }
+        .fav-card-img {
+            width: 100%;
+            height: 250px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .fav-card-img img { max-width: 85%; max-height: 85%; object-fit: contain; }
+        .fav-brand { font-size: 12px; color: #97bc62; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .fav-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #333; margin-bottom: 10px; }
+        .fav-price { font-size: 28px; color: #2c5f2d; font-weight: 600; margin-bottom: 20px; }
+        .remove-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .remove-btn:hover { background: #e74c3c; color: white; }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #888;
+            font-size: 18px;
+            grid-column: 1 / -1;
+        }
+        .empty-state span { font-size: 50px; display: block; margin-bottom: 15px; }
+        .empty-state a { color: #2c5f2d; text-decoration: none; border-bottom: 1px solid; }
+
+        footer { background: #2c2c2c; color: #aaa; padding: 40px 0 20px; margin-top: 60px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; }
+
+        @media (max-width: 768px) {
+            .favorites-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html" style="color:#2c5f2d; font-weight:600;">Любимое</a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Ваше избранное</h1>
+            <p>Ароматы, которые вы отложили для себя</p>
+        </div>
+
+        <div class="favorites-grid" id="favoritesGrid">
+            <!-- Товары будут добавлены через JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const favoritesGrid = document.getElementById('favoritesGrid');
+
+        // Функция отображения избранного
+        function renderFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('ps_favorites')) || [];
+            
+            if (favorites.length === 0) {
+                favoritesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <span>💔</span>
+                        В избранном пока пусто.<br>
+                        <a href="catalog.html">Перейти в каталог</a>, чтобы добавить товары
+                    </div>
+                `;
+                return;
+            }
+
+            favoritesGrid.innerHTML = '';
+            
+            favorites.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'fav-card';
+                card.innerHTML = `
+                    <div class="fav-card-img">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="fav-brand">${item.brand}</div>
+                    <h3 class="fav-name">${item.name}</h3>
+                    <div class="fav-price">${item.price} BYN</div>
+                    <button class="remove-btn" onclick="removeFromFavorites(${index})">Убрать из избранного</button>
+                `;
+                favoritesGrid.appendChild(card);
+            });
+        }
+
+        // Функция удаления из избранного
+        function removeFromFavorites(index) {
+            const favorites = JSON.parse(localStorage.getItem('ps_favorites')) || [];
+            favorites.splice(index, 1);
+            localStorage.setItem('ps_favorites', JSON.stringify(favorites));
+            renderFavorites();
+            updateFavCount();
+        }
+
+        // Обновление счетчика
+        function updateFavCount() {
+            const favorites = JSON.parse(localStorage.getItem('ps_favorites')) || [];
+            const countElement = document.querySelector('a[href="favorites.html"] span');
+            if (countElement) {
+                countElement.textContent = `(${favorites.length})`;
+            }
+        }
+
+        // Инициализация
+        renderFavorites();
+        updateFavCount();
+    </script>
+
+</body>
+</html>
