@@ -773,3 +773,22 @@
             }
         }
     </style>
+<header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" style="color:#2c5f2d; font-weight:600;">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина <span id="cartCount">(0)</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
