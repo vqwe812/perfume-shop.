@@ -1,147 +1,775 @@
-/* === ШАПКА И НАВИГАЦИЯ === */
-header {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 15px 0;
-    box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerfumeShop - Парфюмерный магазин</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Основные цвета */
+            --primary-color: #2c5f2d;
+            --secondary-color: #97bc62;
+            --accent-color: #e74c3c;
+            --text-color: #4a4a4a;
+            --light-bg: #f5f7f0;
+            --white: #ffffff;
+            
+            /* Базовые размеры (будут меняться через media queries) */
+            --base-font-size: 16px;
+            --container-max-width: 1200px;
+            --section-padding: 80px;
+            --grid-gap: 30px;
+        }
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap; /* НЕ переносить! */
-    gap: 15px;
-}
-
-.logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    font-weight: 600;
-    color: #2c5f2d;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    white-space: nowrap;
-    flex-shrink: 0; /* Не сжимать */
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #97bc62, #2c5f2d);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: clamp(10px, 3vw, 25px);
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    flex-wrap: nowrap; /* НЕ переносить на одной строке! */
-}
-
-nav li {
-    display: inline-block;
-    margin: 0;
-}
-
-nav a {
-    color: #4a4a4a;
-    text-decoration: none;
-    font-size: clamp(0.65rem, 2vw, 0.813rem);
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    padding: 5px 0;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #2c5f2d;
-}
-
-.cart-btn {
-    background: linear-gradient(135deg, #2c5f2d, #1e4220);
-    color: white;
-    padding: clamp(6px, 1.5vw, 10px) clamp(12px, 2.5vw, 20px);
-    border-radius: 25px;
-    font-size: clamp(0.65rem, 2vw, 0.75rem);
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.cart-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
-}
-
-/* === МОБИЛЬНАЯ ВЕРСИЯ === */
-@media (max-width: 768px) {
-    .header-content {
-        flex-wrap: nowrap; /* ВСЕГДА в строку! */
-        justify-content: space-between;
-    }
-    
-    nav ul {
-        gap: 8px;
-        flex-wrap: nowrap; /* НЕ переносить! */
-        overflow-x: auto; /* Прокрутка если не влезает */
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 2px;
-    }
-    
-    /* Скрыть скроллбар */
-    nav ul::-webkit-scrollbar {
-        height: 2px;
-    }
-    
-    nav ul::-webkit-scrollbar-thumb {
-        background: #97bc62;
-        border-radius: 2px;
-    }
-    
-    nav a {
-        font-size: 0.65rem;
-        letter-spacing: 0.5px;
-    }
-    
-    .cart-btn {
-        padding: 6px 12px;
-        font-size: 0.65rem;
-    }
-    
-    /* На очень маленьких экранах скрываем текст ссылок, оставляем только корзину */
-    @media (max-width: 480px) {
-        nav a:not(.cart-btn) {
-            display: none;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            font-size: var(--base-font-size);
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+            background-attachment: fixed;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Контейнер с резиновой шириной */
+        .container { 
+            width: 100%;
+            max-width: var(--container-max-width); 
+            margin: 0 auto; 
+            padding: 0 clamp(15px, 3vw, 30px); 
+        }
+        
+        /* === ШАПКА === */
+        header {
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: clamp(15px, 2vw, 20px) 0; 
+            box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+        }
+        
+        .header-content { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap;
+            gap: clamp(10px, 2vw, 20px);
         }
         
         .logo {
-            font-size: 1.1rem;
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.5rem, 4vw, 2rem); 
+            font-weight: 600;
+            color: var(--primary-color); 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: clamp(8px, 1.5vw, 12px);
+            white-space: nowrap;
         }
         
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 16px;
+            width: clamp(35px, 5vw, 40px); 
+            height: clamp(35px, 5vw, 40px); 
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            font-size: clamp(16px, 3vw, 20px);
+            flex-shrink: 0;
         }
-    }
-}
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: clamp(15px, 3vw, 35px); 
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--text-color); 
+            text-decoration: none; 
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            font-weight: 500;
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        nav a:hover { color: var(--primary-color); }
+        
+        .cart-btn {
+            background: linear-gradient(135deg, var(--primary-color), #1e4220); 
+            color: white;
+            padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2.5vw, 25px); 
+            border-radius: 25px; 
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
+            font-weight: 500;
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: all 0.3s ease; 
+            text-decoration: none;
+        }
+        
+        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+
+        /* === HERO БЛОК === */
+        .hero {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%);
+            padding: clamp(60px, 10vw, 100px) 0; 
+            text-align: center; 
+            margin: clamp(20px, 3vw, 30px) 0; 
+            border-radius: clamp(20px, 4vw, 40px);
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 10px 40px rgba(44, 95, 45, 0.1);
+        }
+        
+        .hero::before {
+            content: '🌺'; 
+            position: absolute; 
+            top: clamp(20px, 4vw, 40px); 
+            right: clamp(40px, 8vw, 80px); 
+            font-size: clamp(60px, 10vw, 90px);
+            opacity: 0.15; 
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '🍃'; 
+            position: absolute; 
+            bottom: clamp(30px, 5vw, 50px); 
+            left: clamp(40px, 8vw, 80px); 
+            font-size: clamp(50px, 8vw, 80px);
+            opacity: 0.15; 
+            animation: float 8s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float { 
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); } 
+        }
+        
+        .hero h1 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(2rem, 6vw, 4rem); 
+            font-weight: 300;
+            color: var(--primary-color); 
+            margin-bottom: clamp(15px, 2vw, 20px);
+            line-height: 1.2;
+        }
+        
+        .hero p { 
+            font-size: clamp(1rem, 2.5vw, 1.25rem); 
+            color: #556b2f; 
+            margin-bottom: clamp(30px, 5vw, 50px); 
+        }
+        
+        .hero-btn {
+            display: inline-block; 
+            padding: clamp(12px, 2.5vw, 18px) clamp(30px, 5vw, 55px); 
+            background: linear-gradient(135deg, var(--primary-color), #1e4220);
+            color: white; 
+            text-decoration: none; 
+            border-radius: 30px; 
+            font-size: clamp(0.8rem, 2vw, 0.938rem); 
+            font-weight: 600;
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(44, 95, 45, 0.3);
+        }
+        
+        .hero-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(44, 95, 45, 0.4); }
+
+        /* === СЕКЦИИ === */
+        .section { padding: clamp(40px, 8vw, var(--section-padding)) 0; }
+        
+        .section-title { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.8rem, 5vw, 2.625rem); 
+            text-align: center; 
+            margin-bottom: clamp(30px, 6vw, 60px); 
+            color: var(--primary-color); 
+        }
+        
+        /* === СЕТКА ТОВАРОВ (резиновая) === */
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); 
+            gap: clamp(20px, 3vw, var(--grid-gap)); 
+        }
+        
+        .product-card {
+            background: var(--white); 
+            border-radius: clamp(15px, 3vw, 20px); 
+            padding: clamp(20px, 3vw, 30px) clamp(15px, 2.5vw, 25px); 
+            text-align: center;
+            transition: all 0.4s ease; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            cursor: pointer; 
+            position: relative;
+        }
+        
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(44, 95, 45, 0.15); }
+        
+        .product-image {
+            width: 100%; 
+            height: clamp(200px, 35vw, 280px); 
+            background: #f8f9fa; 
+            border-radius: clamp(10px, 2vw, 15px);
+            margin-bottom: clamp(15px, 2.5vw, 20px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative;
+        }
+        
+        .product-image img { max-width: 85%; max-height: 85%; object-fit: contain; }
+        
+        .product-badge {
+            position: absolute; 
+            top: clamp(10px, 2vw, 15px); 
+            right: clamp(10px, 2vw, 15px); 
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white; 
+            padding: clamp(4px, 1vw, 6px) clamp(10px, 2vw, 14px); 
+            border-radius: 20px; 
+            font-size: clamp(9px, 1.5vw, 11px); 
+            font-weight: 600; 
+            text-transform: uppercase;
+        }
+        
+        .product-badge.new { background: linear-gradient(135deg, #667eea, #764ba2); }
+
+        /* КНОПКА ИЗБРАННОГО */
+        .fav-btn {
+            position: absolute; 
+            top: clamp(10px, 2vw, 15px); 
+            left: clamp(10px, 2vw, 15px);
+            width: clamp(35px, 5vw, 40px); 
+            height: clamp(35px, 5vw, 40px); 
+            background: white; 
+            border: 2px solid #e8f5e9;
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: clamp(16px, 3vw, 20px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.3s ease; 
+            z-index: 3; 
+            color: #ccc;
+        }
+        
+        .fav-btn:hover { border-color: var(--accent-color); color: var(--accent-color); transform: scale(1.1); }
+        .fav-btn.active { background: #fff0f0; border-color: var(--accent-color); color: var(--accent-color); }
+
+        .product-brand { 
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            color: var(--secondary-color); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: clamp(8px, 1.5vw, 10px); 
+        }
+        
+        .product-card h3 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.2rem, 3vw, 1.5rem); 
+            color: #333; 
+            margin-bottom: clamp(6px, 1vw, 8px); 
+        }
+        
+        .product-meta { 
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            color: #999; 
+            margin-bottom: clamp(10px, 2vw, 15px); 
+        }
+        
+        .price { 
+            font-size: clamp(1.4rem, 3.5vw, 1.75rem); 
+            color: var(--primary-color); 
+            font-weight: 600; 
+            margin-bottom: clamp(15px, 2.5vw, 20px); 
+        }
+        
+        .add-to-cart {
+            width: 100%; 
+            padding: clamp(10px, 2vw, 12px); 
+            background: transparent; 
+            color: var(--primary-color); 
+            border: 2px solid var(--primary-color);
+            border-radius: 25px; 
+            cursor: pointer; 
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: all 0.3s;
+        }
+        
+        .add-to-cart:hover { background: linear-gradient(135deg, var(--primary-color), #1e4220); color: white; }
+
+        /* Преимущества и Подвал */
+        .advantages { 
+            background: linear-gradient(135deg, rgba(232, 245, 233, 0.5), rgba(255, 248, 225, 0.5)); 
+            padding: clamp(40px, 8vw, 80px) 0; 
+            margin: clamp(30px, 5vw, 40px) 0; 
+            border-radius: clamp(20px, 4vw, 30px); 
+        }
+        
+        .adv-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); 
+            gap: clamp(20px, 3vw, 30px); 
+        }
+        
+        .adv-item { 
+            text-align: center; 
+            padding: clamp(20px, 3vw, 30px) clamp(15px, 2.5vw, 20px); 
+            background: white; 
+            border-radius: clamp(15px, 3vw, 20px); 
+        }
+        
+        .adv-icon { font-size: clamp(35px, 6vw, 50px); margin-bottom: clamp(15px, 2.5vw, 20px); }
+        .adv-item h4 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1rem, 2.5vw, 1.25rem); 
+            color: var(--primary-color); 
+            margin-bottom: clamp(8px, 1.5vw, 10px); 
+        }
+        .adv-item p { font-size: clamp(0.75rem, 1.5vw, 0.813rem); color: #666; }
+
+        .newsletter { 
+            background: linear-gradient(135deg, var(--primary-color), #1e4220); 
+            padding: clamp(40px, 8vw, 80px) 0; 
+            text-align: center; 
+            color: white; 
+            border-radius: clamp(20px, 4vw, 30px); 
+            margin: clamp(30px, 5vw, 40px) 0; 
+            position: relative; 
+            overflow: hidden; 
+        }
+        
+        .newsletter::before { 
+            content: '🌸'; 
+            position: absolute; 
+            top: -30px; 
+            left: -20px; 
+            font-size: clamp(150px, 25vw, 200px); 
+            opacity: 0.05; 
+        }
+        
+        .newsletter h2 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.5rem, 4vw, 2.25rem); 
+            margin-bottom: clamp(10px, 2vw, 15px); 
+        }
+        
+        .newsletter p { 
+            font-size: clamp(0.8rem, 1.8vw, 0.875rem); 
+            opacity: 0.9; 
+            margin-bottom: clamp(25px, 4vw, 35px); 
+        }
+        
+        .sub-form { 
+            display: flex; 
+            justify-content: center; 
+            gap: clamp(10px, 2vw, 15px);
+            flex-wrap: wrap;
+        }
+        
+        .sub-form input { 
+            padding: clamp(12px, 2.5vw, 15px) clamp(20px, 3vw, 25px); 
+            border: none; 
+            border-radius: 30px; 
+            width: clamp(250px, 40vw, 350px); 
+            font-size: clamp(0.8rem, 1.8vw, 0.875rem); 
+        }
+        
+        .sub-form button { 
+            padding: clamp(12px, 2.5vw, 15px) clamp(25px, 4vw, 35px); 
+            background: var(--secondary-color); 
+            color: white; 
+            border: none; 
+            border-radius: 30px;
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+        }
+
+        footer { 
+            background: #2c2c2c; 
+            color: #aaa; 
+            padding: clamp(40px, 6vw, 60px) 0 clamp(20px, 3vw, 30px); 
+            margin-top: clamp(40px, 6vw, 60px); 
+        }
+        
+        .footer-content { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); 
+            gap: clamp(25px, 4vw, 40px); 
+            margin-bottom: clamp(30px, 5vw, 40px); 
+        }
+        
+        .footer-col h4 { 
+            color: white; 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1rem, 2.5vw, 1.25rem); 
+            margin-bottom: clamp(15px, 2.5vw, 20px); 
+        }
+        
+        .footer-col p, .footer-col a { 
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            line-height: 2; 
+            color: #aaa; 
+            text-decoration: none; 
+        }
+        
+        .footer-col a:hover { color: var(--secondary-color); }
+        .footer-col ul { list-style: none; }
+        .footer-bottom { 
+            text-align: center; 
+            padding-top: clamp(20px, 3vw, 30px); 
+            border-top: 1px solid #444; 
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
+        }
+
+        /* МОДАЛЬНОЕ ОКНО (адаптивное) */
+        .modal {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000; 
+            justify-content: center; 
+            align-items: center; 
+            padding: clamp(10px, 2vw, 20px);
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: white; 
+            border-radius: clamp(20px, 4vw, 25px); 
+            max-width: min(90%, 900px); 
+            width: 100%; 
+            max-height: 90vh;
+            overflow-y: auto; 
+            position: relative; 
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn { 
+            from { opacity: 0; transform: scale(0.95); } 
+            to { opacity: 1; transform: scale(1); } 
+        }
+        
+        .modal-close { 
+            position: absolute; 
+            top: clamp(15px, 2.5vw, 20px); 
+            right: clamp(20px, 3vw, 25px); 
+            background: none; 
+            border: none; 
+            font-size: clamp(24px, 4vw, 32px); 
+            cursor: pointer; 
+            color: #888; 
+            z-index: 10; 
+        }
+        
+        .modal-close:hover { color: var(--primary-color); }
+        
+        .modal-body { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: clamp(25px, 4vw, 40px); 
+            padding: clamp(25px, 4vw, 40px); 
+        }
+        
+        .modal-image { 
+            background: #f8f9fa; 
+            border-radius: clamp(15px, 3vw, 20px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: clamp(20px, 3vw, 30px); 
+            height: clamp(300px, 50vh, 450px); 
+            position: relative; 
+        }
+        
+        .modal-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .modal-fav-btn {
+            position: absolute; 
+            top: clamp(15px, 2.5vw, 20px); 
+            left: clamp(15px, 2.5vw, 20px);
+            width: clamp(40px, 6vw, 44px); 
+            height: clamp(40px, 6vw, 44px); 
+            background: white; 
+            border: 2px solid #e8f5e9;
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: clamp(18px, 3vw, 22px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transition: all 0.3s ease; 
+            z-index: 10; 
+            color: #ccc;
+        }
+        
+        .modal-fav-btn:hover { border-color: var(--accent-color); color: var(--accent-color); transform: scale(1.1); }
+        .modal-fav-btn.active { background: #fff0f0; border-color: var(--accent-color); color: var(--accent-color); }
+
+        .modal-brand { 
+            font-size: clamp(0.8rem, 1.8vw, 0.875rem); 
+            color: var(--secondary-color); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            margin-bottom: clamp(8px, 1.5vw, 10px); 
+        }
+        
+        .modal-title { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.5rem, 4vw, 2.25rem); 
+            color: var(--primary-color); 
+            margin-bottom: clamp(10px, 2vw, 15px); 
+        }
+        
+        .modal-price { 
+            font-size: clamp(1.5rem, 3.5vw, 2rem); 
+            color: var(--primary-color); 
+            font-weight: 600; 
+            margin-bottom: clamp(15px, 2.5vw, 25px); 
+        }
+        
+        .modal-origin { 
+            margin-bottom: clamp(15px, 2.5vw, 25px); 
+            padding-bottom: clamp(15px, 2.5vw, 20px); 
+            border-bottom: 2px solid #f0f0f0; 
+        }
+        
+        .modal-origin strong { color: var(--primary-color); font-size: clamp(0.85rem, 1.8vw, 0.938rem); }
+        
+        .modal-desc { 
+            font-size: clamp(0.85rem, 1.8vw, 0.938rem); 
+            line-height: 1.8; 
+            color: #555; 
+            margin-bottom: clamp(20px, 3vw, 30px); 
+        }
+        
+        .fragrance-pyramid h3 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: clamp(1.2rem, 3vw, 1.5rem); 
+            color: var(--primary-color); 
+            margin-bottom: clamp(15px, 2.5vw, 20px); 
+        }
+        
+        .note-level { 
+            background: #f8faf7; 
+            padding: clamp(10px, 2vw, 15px) clamp(15px, 2.5vw, 20px); 
+            border-radius: clamp(8px, 1.5vw, 12px); 
+            margin-bottom: clamp(8px, 1.5vw, 12px); 
+            border-left: 4px solid var(--secondary-color); 
+        }
+        
+        .note-level h4 { 
+            font-size: clamp(0.75rem, 1.5vw, 0.813rem); 
+            color: var(--primary-color); 
+            text-transform: uppercase; 
+            margin-bottom: clamp(4px, 1vw, 6px); 
+            font-weight: 600; 
+            letter-spacing: 0.5px; 
+        }
+        
+        .note-level p { 
+            font-size: clamp(0.8rem, 1.6vw, 0.875rem); 
+            color: #666; 
+            margin: 0; 
+        }
+        
+        .modal-cart-btn {
+            width: 100%; 
+            padding: clamp(12px, 2.5vw, 16px); 
+            background: linear-gradient(135deg, var(--primary-color), #1e4220);
+            color: white; 
+            border: none; 
+            border-radius: 25px; 
+            font-size: clamp(0.8rem, 1.8vw, 0.875rem); 
+            font-weight: 600;
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            cursor: pointer; 
+            margin-top: clamp(15px, 2.5vw, 25px); 
+            transition: all 0.3s;
+        }
+        
+        .modal-cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+
+        /* ============================================
+           МЕДИА-ЗАПРОСЫ ДЛЯ РАЗНЫХ РАЗРЕШЕНИЙ
+           ============================================ */
+        
+        /* Очень маленькие экраны (320px - 480px) */
+        @media (max-width: 480px) {
+            :root {
+                --base-font-size: 14px;
+                --section-padding: 40px;
+                --grid-gap: 15px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .hero::before,
+            .hero::after {
+                display: none;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .adv-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-image {
+                height: 250px;
+            }
+        }
+        
+        /* Маленькие экраны (481px - 768px) */
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 50px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .adv-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .sub-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .sub-form input {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        /* Средние экраны (769px - 1024px) */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-image {
+                height: 300px;
+            }
+        }
+        
+        /* Большие экраны (1025px - 1200px) */
+        @media (min-width: 1025px) and (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Очень большие экраны (1201px - 1440px) */
+        @media (min-width: 1201px) and (max-width: 1440px) {
+            .container {
+                max-width: 1300px;
+            }
+        }
+        
+        /* Ultra-wide экраны (1441px+) */
+        @media (min-width: 1441px) {
+            .container {
+                max-width: 1400px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Ориентация устройства */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .hero {
+                padding: 40px 0;
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+            }
+            
+            .modal-image {
+                height: 60vh;
+            }
+        }
+        
+        /* Печать */
+        @media print {
+            header, footer, .hero, .newsletter, .add-to-cart, .fav-btn {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .product-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
