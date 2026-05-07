@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+.section-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #97bc62;
+    font-size: 28px;
+}
+
+.section-icon svg {
+    transition: all 0.3s ease;
+}
+
+.section-title:hover .section-icon svg {
+    transform: scale(1.1) rotate(5deg);
+    stroke: #97bc62;
+}
 /* === БАЗОВЫЕ ПЕРЕМЕННЫЕ (Светлая тема) === */
 :root {
     --bg-body: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
@@ -1155,17 +1172,93 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
                 </div>
             </div>
         </section>
+<!-- === ГАЛЕРЕЯ (ЗАДАНИЕ 4) === -->
+<section class="gallery-section">
+    <h2 class="section-title">
+        <span class="section-icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+        <circle cx="12" cy="13" r="4"></circle>
+    </svg>
+</span>
+        Фото наших клиентов
+    </h2>
+    
+    <!-- Сетка галереи (изначально пустая, заполнится через JS) -->
+    <div class="gallery-grid" id="galleryGrid"></div>
 
-        <section class="advantages">
-            <div class="container">
-                <div class="adv-grid">
-                    <div class="adv-item"><div class="adv-icon">✨</div><h4>100% Оригинал</h4><p>Только сертифицированная продукция</p></div>
-                    <div class="adv-item"><div class="adv-icon">🚚</div><h4>Быстрая доставка</h4><p>Доставка от 1 дня по всей стране</p></div>
-                    <div class="adv-item"><div class="adv-icon">🎁</div><h4>Пробники в подарок</h4><p>К каждому заказу от 100 BYN</p></div>
-                    <div class="adv-item"><div class="adv-icon">💚</div><h4>Помощь в выборе</h4><p>Профессиональные консультанты</p></div>
+    <!-- Панель добавления -->
+    <div class="gallery-controls">
+        <div class="input-group">
+            <input type="text" id="imgUrl" placeholder="Вставьте URL изображения (https://...)" autocomplete="off">
+            <input type="text" id="imgCaption" placeholder="Имя или описание">
+            <button id="addPhotoBtn">Добавить фото</button>
+        </div>
+        <p class="error-message" id="galleryError"></p>
+    </div>
+</section>
+<!-- === КОНЕЦ ГАЛЕРЕИ === -->
+
+        <!-- === ПРЕИМУЩЕСТВА === -->
+<section class="advantages">
+    <div class="container">
+        <div class="adv-grid">
+            <!-- 1. Оригинал -->
+            <div class="adv-item">
+                <div class="adv-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        <path d="M9 12l2 2 4-4" stroke="#97bc62" stroke-width="2"/>
+                    </svg>
                 </div>
+                <h4>100% Оригинал</h4>
+                <p>Только сертифицированная продукция от официальных поставщиков</p>
             </div>
-        </section>
+
+            <!-- 2. Доставка -->
+            <div class="adv-item">
+                <div class="adv-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13" rx="2" ry="2"/>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                        <circle cx="5.5" cy="18.5" r="2.5"/>
+                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                </div>
+                <h4>Быстрая доставка</h4>
+                <p>Доставка от 1 дня по всей стране. Бесплатно от 5000 BYN</p>
+            </div>
+
+            <!-- 3. Подарки -->
+            <div class="adv-item">
+                <div class="adv-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 12 20 22 4 22 4 12"/>
+                        <rect x="2" y="7" width="20" height="5"/>
+                        <line x1="12" y1="22" x2="12" y2="7"/>
+                        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                    </svg>
+                </div>
+                <h4>Пробники в подарок</h4>
+                <p>К каждому заказу дарим пробники премиальных ароматов</p>
+            </div>
+
+            <!-- 4. Помощь -->
+            <div class="adv-item">
+                <div class="adv-icon">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        <path d="M9 12l2 2 4-4" stroke="#97bc62" stroke-width="2"/>
+                    </svg>
+                </div>
+                <h4>Помощь в выборе</h4>
+                <p>Профессиональные консультанты помогут подобрать аромат</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- === КОНЕЦ ПРЕИМУЩЕСТВ === -->
 
         <section class="newsletter">
             <div class="container">
@@ -1175,7 +1268,6 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             </div>
         </section>
     </main>
-
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -1624,6 +1716,81 @@ function showBrandInfo(brandKey) {
         brandInfoPanel.style.animation = 'slideIn 0.4s ease';
     }, 10);
 }
+</script>
+<script>
+    // === ЗАДАНИЕ 4: ГАЛЕРЕЯ ===
+    
+    // Начальные данные (6 фотографий)
+    // Используем надежные ссылки-заглушки для демонстрации
+    const initialPhotos = [
+        { url: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&auto=format&fit=crop&q=60", caption: "Елена, Москва" },
+        { url: "https://images.unsplash.com/photo-1594035910387-fea477942653?w=500&auto=format&fit=crop&q=60", caption: "Мой новый парфюм" },
+        { url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500&auto=format&fit=crop&q=60", caption: "Анна К." },
+        { url: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=500&auto=format&fit=crop&q=60", caption: "Виктория, Минск" },
+        { url: "https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=500&auto=format&fit=crop&q=60", caption: "Вечерний образ" },
+        { url: "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=500&auto=format&fit=crop&q=60", caption: "Ольга С." }
+    ];
+
+    const galleryGrid = document.getElementById('galleryGrid');
+    const btnAdd = document.getElementById('addPhotoBtn');
+    const inputUrl = document.getElementById('imgUrl');
+    const inputCaption = document.getElementById('imgCaption');
+    const errorMsg = document.getElementById('galleryError');
+
+    // 1. Функция создания карточки
+    function createGalleryCard(url, caption) {
+        const card = document.createElement('div');
+        card.className = 'gallery-item';
+
+        // Обработка ошибки загрузки картинки
+        card.innerHTML = `
+            <img src="${url}" alt="${caption}" onerror="this.parentElement.style.display='none'">
+            <div class="gallery-caption">${caption || 'Без названия'}</div>
+        `;
+
+        return card;
+    }
+
+    // 2. Инициализация (загрузка стартовых фото)
+    function initGallery() {
+        initialPhotos.forEach(photo => {
+            const card = createGalleryCard(photo.url, photo.caption);
+            galleryGrid.appendChild(card);
+        });
+    }
+
+    // 3. Обработчик добавления нового фото
+    btnAdd.addEventListener('click', function() {
+        const url = inputUrl.value.trim();
+        const caption = inputCaption.value.trim();
+
+        // Валидация
+        if (!url) {
+            errorMsg.textContent = "Пожалуйста, введите URL изображения!";
+            errorMsg.style.color = "#e74c3c";
+            return;
+        }
+
+        // Создаем элемент
+        const newCard = createGalleryCard(url, caption);
+        
+        // Добавляем в начало сетки (prepend) или в конец (appendChild)
+        galleryGrid.prepend(newCard);
+
+        // Очистка полей
+        inputUrl.value = '';
+        inputCaption.value = '';
+        errorMsg.textContent = "Фото успешно добавлено!";
+        errorMsg.style.color = "#2c5f2d";
+
+        // Очистка сообщения через 3 секунды
+        setTimeout(() => {
+            errorMsg.textContent = "";
+        }, 3000);
+    });
+
+    // Запуск
+    initGallery();
 </script>
 </body>
 </html>

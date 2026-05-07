@@ -1224,3 +1224,128 @@ footer {
 [data-theme="dark"] .brand-info-details .brand-features li {
     color: #a8b5a8 !important;
 }
+/* === СТИЛИ ГАЛЕРЕИ === */
+.gallery-section {
+    padding: 60px 0;
+    background: transparent;
+}
+
+.gallery-grid {
+    display: grid;
+    /* Адаптивная сетка: минимум 250px, остальное растягивается */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Карточка галереи */
+.gallery-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: white;
+    animation: fadeIn 0.5s ease;
+    aspect-ratio: 1 / 1; /* Квадратные карточки */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Подпись на фото */
+.gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 20px 15px 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+}
+
+/* Панель управления */
+.gallery-controls {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #e8f5e9;
+    border-radius: 10px;
+    font-family: inherit;
+    min-width: 200px;
+}
+
+#addPhotoBtn {
+    padding: 10px 20px;
+    background: #2c5f2d;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+#addPhotoBtn:hover {
+    background: #1e4220;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+/* Темная тема для галереи */
+[data-theme="dark"] .gallery-item {
+    background: #252d25;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .gallery-controls {
+    background: #252d25;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .input-group input {
+    background: #1a1f1a;
+    color: #e8f5e9;
+    border-color: #3a453a;
+}
