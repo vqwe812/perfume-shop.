@@ -779,3 +779,448 @@ footer {
         border: 1px solid #ddd;
     }
 }
+/* =========================================
+   ИСПРАВЛЕНИЕ: ПОЛНАЯ ТЁМНАЯ ТЕМА
+   (Добавь в самый конец style.css)
+   ========================================= */
+
+/* 1. Глобальный фон и текст */
+[data-theme="dark"] body {
+    background: #1a1f1a !important;
+    color: #e8f5e9 !important;
+}
+
+/* 2. Шапка и навигация */
+[data-theme="dark"] header {
+    background: rgba(30, 35, 30, 0.95) !important;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
+}
+[data-theme="dark"] nav a {
+    color: #e8f5e9 !important;
+}
+[data-theme="dark"] nav a:hover {
+    color: #97bc62 !important;
+}
+
+/* 3. Hero секция (уже работает, но усилим) */
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%) !important;
+}
+[data-theme="dark"] .hero h1 {
+    color: #97bc62 !important;
+}
+[data-theme="dark"] .hero p {
+    color: #a8b5a8 !important;
+}
+
+/* 4. Карточки товаров */
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .adv-item,
+[data-theme="dark"] .fav-card,
+[data-theme="dark"] .cart-item,
+[data-theme="dark"] .cart-summary {
+    background: #252d25 !important;
+    color: #e8f5e9 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+    border-color: #3a453a !important;
+}
+[data-theme="dark"] .product-card h3,
+[data-theme="dark"] .fav-name {
+    color: #e8f5e9 !important;
+}
+[data-theme="dark"] .product-meta,
+[data-theme="dark"] .product-brand {
+    color: #a8b5a8 !important;
+}
+
+/* 5. Фоновые элементы (секции) */
+[data-theme="dark"] .section {
+    background: transparent !important;
+}
+[data-theme="dark"] .advantages {
+    background: linear-gradient(135deg, rgba(30, 43, 30, 0.6), rgba(42, 48, 37, 0.6)) !important;
+}
+[data-theme="dark"] .newsletter {
+    background: linear-gradient(135deg, #151915, #1e2b1e) !important;
+}
+
+/* 6. Поля ввода и формы */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: #2d352d !important;
+    color: #e8f5e9 !important;
+    border-color: #3a453a !important;
+}
+
+/* 7. Подвал */
+[data-theme="dark"] footer {
+    background: #151915 !important;
+    color: #8a958a !important;
+}
+[data-theme="dark"] .footer-bottom {
+    border-top-color: #3a453a !important;
+}
+
+/* 8. Модальные окна */
+[data-theme="dark"] .modal {
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+[data-theme="dark"] .modal-content {
+    background: #252d25 !important;
+    color: #e8f5e9 !important;
+}
+[data-theme="dark"] .modal-desc,
+[data-theme="dark"] .note-level p {
+    color: #a8b5a8 !important;
+}
+
+/* 9. Бегущая строка */
+[data-theme="dark"] .marquee-section {
+    background: #1e2b1e !important;
+}
+[data-theme="dark"] .marquee-card {
+    background: #252d25 !important;
+    color: #e8f5e9 !important;
+}
+/* =========================================
+   ИСПРАВЛЕНИЕ: ТЁМНЫЕ БЛОКИ (КАРТОЧКИ, ФОРМЫ)
+   ========================================= */
+
+/* 1. Блоки в корзине и оформлении заказа */
+[data-theme="dark"] .cart-items,
+[data-theme="dark"] .cart-summary,
+[data-theme="dark"] .checkout-form-section,
+[data-theme="dark"] .checkout-summary-section,
+[data-theme="dark"] .success-box {
+    background: #252d25 !important;
+    color: #e8f5e9 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Заголовки внутри блоков */
+[data-theme="dark"] .cart-items h2,
+[data-theme="dark"] .cart-summary h2,
+[data-theme="dark"] .checkout-form-section h2,
+[data-theme="dark"] .checkout-summary-section h2,
+[data-theme="dark"] .success-box h2 {
+    color: #97bc62 !important;
+    border-bottom-color: #3a453a !important;
+}
+
+/* 2. Блоки фильтров в каталоге */
+[data-theme="dark"] .filters {
+    background: #252d25 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Текст внутри фильтров */
+[data-theme="dark"] .filter-group label,
+[data-theme="dark"] .results-count {
+    color: #a8b5a8 !important;
+}
+
+/* Выпадающие списки и поиск */
+[data-theme="dark"] .filter-group select,
+[data-theme="dark"] .search-box input {
+    background: #1a1f1a !important;
+    color: #e8f5e9 !important;
+    border-color: #3a453a !important;
+}
+
+/* 3. Общие стили для полей ввода (чтобы работали везде) */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #1a1f1a !important;
+    color: #e8f5e9 !important;
+    border: 2px solid #3a453a !important;
+}
+
+/* 4. Итоговые суммы и цены */
+[data-theme="dark"] .cart-item-price,
+[data-theme="dark"] .summary-row span,
+[data-theme="dark"] .total {
+    color: #97bc62 !important;
+}
+
+/* 5. Кнопки внутри тёмных блоков */
+[data-theme="dark"] .add-to-cart,
+[data-theme="dark"] .remove-btn {
+    color: #97bc62 !important;
+    border-color: #97bc62 !important;
+}
+[data-theme="dark"] .add-to-cart:hover,
+[data-theme="dark"] .remove-btn:hover {
+    background: #97bc62 !important;
+    color: #fff !important;
+}
+/* === СЕКЦИЯ БРЕНДОВ (ЗАДАНИЕ 2) === */
+.brands-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.3), rgba(255, 248, 225, 0.3));
+}
+
+.brands-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.brand-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* ЭФФЕКТ ГРАНИЦ ПРИ НАВЕДЕНИИ (Требование задания) */
+.brand-card::before,
+.brand-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #97bc62, transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.brand-card::before {
+    top: 0;
+}
+
+.brand-card::after {
+    bottom: 0;
+}
+
+.brand-card:hover::before,
+.brand-card:hover::after {
+    transform: scaleX(1);
+}
+
+.brand-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(151, 188, 98, 0.25);
+}
+
+.brand-logo {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.brand-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.3s;
+}
+
+.brand-card:hover .brand-logo img {
+    filter: grayscale(0%);
+}
+
+.brand-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: #2c5f2d;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ПАНЕЛЬ ИНФОРМАЦИИ О БРЕНДЕ */
+.brand-info-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+    min-height: 300px;
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.brand-info-content {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.brand-info-logo {
+    width: 100%;
+    height: 180px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.brand-info-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.brand-info-details h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: #2c5f2d;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #97bc62;
+}
+
+.brand-info-details .brand-country {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f7f0;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #2c5f2d;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.brand-info-details .brand-history {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.brand-info-details .brand-features {
+    margin-top: 20px;
+}
+
+.brand-info-details .brand-features h4 {
+    font-size: 1.1rem;
+    color: #2c5f2d;
+    margin-bottom: 10px;
+}
+
+.brand-info-details .brand-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.brand-info-details .brand-features li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #666;
+}
+
+.brand-info-details .brand-features li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: #97bc62;
+    font-size: 14px;
+}
+
+/* Placeholder */
+.info-placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.info-placeholder .placeholder-icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.info-placeholder p {
+    font-size: 1.1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .brands-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .brand-info-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .brand-info-logo {
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brands-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .brand-card h3 {
+        font-size: 1rem;
+    }
+}
+
+/* Тёмная тема для секции брендов */
+[data-theme="dark"] .brands-section {
+    background: linear-gradient(135deg, rgba(30, 43, 30, 0.4), rgba(42, 48, 37, 0.4)) !important;
+}
+
+[data-theme="dark"] .brand-card {
+    background: #252d25 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+}
+
+[data-theme="dark"] .brand-card h3 {
+    color: #97bc62 !important;
+}
+
+[data-theme="dark"] .brand-logo {
+    background: #1a1f1a !important;
+}
+
+[data-theme="dark"] .brand-info-panel {
+    background: #252d25 !important;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.4) !important;
+}
+
+[data-theme="dark"] .brand-info-details h3 {
+    color: #97bc62 !important;
+    border-bottom-color: #3a453a !important;
+}
+
+[data-theme="dark"] .brand-info-details .brand-history,
+[data-theme="dark"] .brand-info-details .brand-features li {
+    color: #a8b5a8 !important;
+}

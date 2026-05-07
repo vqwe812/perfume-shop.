@@ -7,6 +7,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
+/* === БАЗОВЫЕ ПЕРЕМЕННЫЕ (Светлая тема) === */
+:root {
+    --bg-body: linear-gradient(135deg, #f5f7f0 0%, #e8f5e9 50%, #fff8e1 100%);
+    --bg-card: #ffffff;
+    --bg-header: rgba(255, 255, 255, 0.95);
+    --bg-input: #fafbfc;
+    --text-main: #4a4a4a;
+    --text-muted: #666666;
+    --border-color: #e8f5e9;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --hero-bg: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%);
+    --footer-bg: #2c2c2c;
+    --footer-text: #aaaaaa;
+}
+
+/* === ТЁМНАЯ ТЕМА === */
+[data-theme="dark"] {
+    --bg-body: linear-gradient(135deg, #1a1f1a 0%, #232b23 50%, #2a3025 100%);
+    --bg-card: #252d25;
+    --bg-header: rgba(30, 35, 30, 0.95);
+    --bg-input: #2d352d;
+    --text-main: #e8f5e9;
+    --text-muted: #a8b5a8;
+    --border-color: #3a453a;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --hero-bg: linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%);
+    --footer-bg: #151915;
+    --footer-text: #8a958a;
+}
+
+/* Применение переменных */
+body {
+    background: var(--bg-body);
+    color: var(--text-main);
+    background-attachment: fixed;
+}
+
+header { background: var(--bg-header); }
+.product-card, .cart-summary, .checkout-form-section, .checkout-summary-section, .modal-content { 
+    background: var(--bg-card); 
+    box-shadow: 0 5px 20px var(--shadow-color);
+}
+input, select, textarea { background: var(--bg-input); border-color: var(--border-color); color: var(--text-main); }
+.hero { background: var(--hero-bg); }
+footer { background: var(--footer-bg); color: var(--footer-text); }
+.nav a { color: var(--text-main); }
+.product-meta, .page-header p, .cart-item-meta { color: var(--text-muted); }
+
+/* Стили кнопки темы */
+.theme-toggle {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+.theme-toggle:hover {
+    background: var(--bg-card);
+    border-color: #97bc62;
+    transform: scale(1.05);
+}
+.icon-dark { display: none; }
         /* === Стили страницы оформления === */
         .checkout-page { padding: clamp(30px, 5vw, 50px) 0; min-height: 80vh; }
         .page-title {
@@ -139,6 +208,7 @@
                 </a>
                 <nav>
                     <ul>
+                        <li><button id="themeToggle" class="theme-toggle"><span class="icon-light">☀️</span><span class="icon-dark">🌙</span></button></li>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
@@ -304,6 +374,72 @@
             });
         });
     </script>
+<script>
+    // 1. Получаем элементы DOM
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    const iconLight = themeToggle.querySelector('.icon-light');
+    const iconDark = themeToggle.querySelector('.icon-dark');
 
+    // 2. Проверяем сохранённую тему в localStorage
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    // Применяем тему при загрузке
+    function applyTheme(theme) {
+        // Изменяем атрибут data-theme у корневого элемента
+        htmlElement.setAttribute('data-theme', theme);
+        
+        // Меняем иконку через display (манипуляция DOM-свойствами)
+        if (theme === 'dark') {
+            iconLight.style.display = 'none';
+            iconDark.style.display = 'inline';
+        } else {
+            iconLight.style.display = 'inline';
+            iconDark.style.display = 'none';
+        }
+
+        // Изменяем фоновые изображения/градиенты, если не подходят под тему
+        updateBackgrounds(theme);
+    }
+
+    // Функция смены фонов (требование задания)
+    function updateBackgrounds(theme) {
+        const heroSection = document.querySelector('.hero');
+        const advantagesSection = document.querySelector('.advantages');
+        
+        if (heroSection) {
+            if (theme === 'dark') {
+                // Тёмный градиент для Hero
+                heroSection.style.background = 'linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%)';
+            } else {
+                // Светлый градиент по умолчанию
+                heroSection.style.background = 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%)';
+            }
+        }
+
+        if (advantagesSection) {
+            if (theme === 'dark') {
+                advantagesSection.style.background = 'linear-gradient(135deg, rgba(30, 43, 30, 0.6), rgba(42, 48, 37, 0.6))';
+            } else {
+                advantagesSection.style.background = 'linear-gradient(135deg, rgba(232, 245, 233, 0.5), rgba(255, 248, 225, 0.5))';
+            }
+        }
+    }
+
+    // 3. Назначаем обработчик события клика
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Сохраняем выбор пользователя
+        localStorage.setItem('theme', newTheme);
+        
+        // Применяем изменения
+        applyTheme(newTheme);
+    });
+
+    // Инициализация при загрузке страницы
+    applyTheme(savedTheme);
+</script>
 </body>
 </html>
