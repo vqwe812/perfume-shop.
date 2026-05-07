@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,112 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+/* === Стили для бегущей строки === */
+.marquee-section {
+    padding: 40px 0;
+    background: linear-gradient(135deg, #f8faf7, #e8f5e9);
+    overflow: hidden; /* Скрываем то, что вылезает за границы */
+}
+
+.marquee-window {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 20px;
+    width: max-content; /* Ширина по содержимому */
+    /* Анимация будет управляться через JS для контроля скорости */
+}
+
+/* Карточка товара внутри строки */
+.marquee-card {
+    width: 220px;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.3s;
+    flex-shrink: 0; /* Чтобы карточки не сжимались */
+}
+
+.marquee-card:hover {
+    transform: translateY(-5px);
+}
+
+.marquee-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.marquee-card h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.marquee-card .price {
+    font-size: 18px;
+    color: #2c5f2d;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Панель управления */
+.marquee-controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.control-group span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+}
+
+.marquee-controls button {
+    background: transparent;
+    border: 1px solid #97bc62;
+    color: #2c5f2d;
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.marquee-controls button:hover {
+    background: #2c5f2d;
+    color: white;
+    border-color: #2c5f2d;
+}
+
+/* Альтернативный стиль (для задания) */
+.marquee-track.dark-theme .marquee-card {
+    background: #2c5f2d;
+    color: white;
+}
+.marquee-track.dark-theme .marquee-card h4 { color: #fff; }
+.marquee-track.dark-theme .marquee-card .price { color: #97bc62; }
         :root {
             /* Основные цвета */
             --primary-color: #2c5f2d;
@@ -764,6 +870,35 @@
                 <a href="catalog.html" class="hero-btn">Перейти в каталог</a>
             </div>
         </section>
+<!-- === БЛОК БЕГУЩЕЙ СТРОКИ (ЗАДАНИЕ 3) === -->
+<section class="marquee-section">
+    <h2 class="section-title">🔥 Хиты продаж</h2>
+    
+    <div class="marquee-window">
+        <div class="marquee-track" id="marqueeTrack">
+            <!-- Товары добавятся сюда автоматически через JS -->
+        </div>
+    </div>
+
+    <!-- Панель управления (Требование задания) -->
+    <div class="marquee-controls">
+        <div class="control-group">
+            <span>Направление:</span>
+            <button onclick="setDirection(1)"> Влево</button>
+            <button onclick="setDirection(-1)"> Вправо</button>
+        </div>
+        <div class="control-group">
+            <span>Скорость:</span>
+            <button onclick="changeSpeed(0.5)"> Медленно</button>
+            <button onclick="changeSpeed(2)"> Быстро</button>
+        </div>
+        <div class="control-group">
+            <span>Стиль:</span>
+            <button onclick="toggleMarqueeStyle()">🎨 Сменить стиль</button>
+        </div>
+    </div>
+</section>
+<!-- === КОНЕЦ БЛОКА === -->
 
         <section class="section">
             <div class="container">
@@ -1037,5 +1172,78 @@
         updateFavoritesUI();
         updateCartCount();
     </script>
+<script>
+    // 1. Данные для товаров (исправленные пути к картинкам)
+    const marqueeProducts = [
+        { name: "Chanel №5", price: "420 BYN", img: "chanel-n5.jpg" },
+        { name: "Dior J'adore", price: "330 BYN", img: "dior-jadore.jpg" },
+        { name: "Gucci Bloom", price: "285 BYN", img: "gucci-bloom.jpg" },
+        { name: "YSL Libre", price: "345 BYN", img: "ysl-libre.jpg" },
+        { name: "Tom Ford", price: "450 BYN", img: "tom-ford-tobacco.jpg" },
+        { name: "Versace Eros", price: "360 BYN", img: "versace-eros.jpg" },
+        { name: "Lancôme", price: "395 BYN", img: "lancome-vie-est-belle.jpg" },
+        { name: "Carolina Herrera", price: "385 BYN", img: "carolina-herrera-good-girl.jpg" }
+    ];
+
+    const track = document.getElementById('marqueeTrack');
+
+    // 2. Функция создания карточек (с ссылкой на каталог)
+    function createCards() {
+        // Дублируем массив 3 раза для бесконечной прокрутки
+        const allProducts = [...marqueeProducts, ...marqueeProducts, ...marqueeProducts];
+        
+        allProducts.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'marquee-card';
+            // Добавляем ссылку на каталог и курсор pointer
+            card.innerHTML = `
+                <a href="catalog.html" style="text-decoration: none; color: inherit; display: block;">
+                    <img src="${product.img}" alt="${product.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div style="display: none; width: 100%; height: 180px; background: #f0f0f0; align-items: center; justify-content: center; color: #999; font-size: 40px;">🧴</div>
+                    <h4>${product.name}</h4>
+                    <p class="price">${product.price}</p>
+                </a>
+            `;
+            card.style.cursor = 'pointer';
+            track.appendChild(card);
+        });
+    }
+
+    createCards();
+
+    // 3. Логика анимации
+    let position = 0;
+    let speed = 1;
+    let direction = 1;
+
+    function animateMarquee() {
+        position -= speed * direction;
+        const totalWidth = track.scrollWidth;
+        
+        if (position <= -totalWidth / 3) {
+            position = 0;
+        } else if (position > 0) {
+            position = -totalWidth / 3;
+        }
+
+        track.style.transform = `translateX(${position}px)`;
+        requestAnimationFrame(animateMarquee);
+    }
+
+    requestAnimationFrame(animateMarquee);
+
+    // 4. Функции управления
+    window.setDirection = function(dir) {
+        direction = dir;
+    }
+
+    window.changeSpeed = function(newSpeed) {
+        speed = newSpeed;
+    }
+
+    window.toggleMarqueeStyle = function() {
+        track.classList.toggle('dark-theme');
+    }
+</script>
 </body>
 </html>
