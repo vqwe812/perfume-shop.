@@ -69,9 +69,30 @@ header { background: var(--bg-header); }
 input, select, textarea { background: var(--bg-input); border-color: var(--border-color); color: var(--text-main); }
 .hero { background: var(--hero-bg); }
 footer { background: var(--footer-bg); color: var(--footer-text); }
-
+.nav a { color: var(--text-main); }
 .product-meta, .page-header p, .cart-item-meta { color: var(--text-muted); }
 
+/* Стили кнопки темы */
+.theme-toggle {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+.theme-toggle:hover {
+    background: var(--bg-card);
+    border-color: #97bc62;
+    transform: scale(1.05);
+}
+.icon-dark { display: none; }
 /* === Стили для бегущей строки === */
 .marquee-section {
     padding: 40px 0;
@@ -178,6 +199,21 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
 }
 .marquee-track.dark-theme .marquee-card h4 { color: #fff; }
 .marquee-track.dark-theme .marquee-card .price { color: #97bc62; }
+        :root {
+            /* Основные цвета */
+            --primary-color: #2c5f2d;
+            --secondary-color: #97bc62;
+            --accent-color: #e74c3c;
+            --text-color: #4a4a4a;
+            --light-bg: #f5f7f0;
+            --white: #ffffff;
+            
+            /* Базовые размеры (будут меняться через media queries) */
+            --base-font-size: 16px;
+            --container-max-width: 1200px;
+            --section-padding: 80px;
+            --grid-gap: 30px;
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -204,7 +240,42 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             padding: 0 clamp(15px, 3vw, 30px); 
         }
         
-       
+        /* === ШАПКА === */
+        header {
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: clamp(15px, 2vw, 20px) 0; 
+            box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+        }
+        
+        nav ul { 
+            display: flex; 
+            list-style: none; 
+            gap: clamp(15px, 3vw, 35px); 
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        nav a:hover { color: var(--primary-color); }
+        
+        .cart-btn {
+            background: linear-gradient(135deg, var(--primary-color), #1e4220); 
+            color: white;
+            padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2.5vw, 25px); 
+            border-radius: 25px; 
+            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
+            font-weight: 500;
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: all 0.3s ease; 
+            text-decoration: none;
+        }
+        
+        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
 
         /* === HERO БЛОК === */
         .hero {
@@ -1720,6 +1791,113 @@ function showBrandInfo(brandKey) {
 
     // Запуск
     initGallery();
+</script>
+<script>
+    // === TOAST УВЕДОМЛЕНИЯ ===
+    
+    // Создаем контейнер для toast при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        const toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container';
+        document.body.appendChild(toastContainer);
+    });
+
+    // Функция показа уведомления
+    function showToast(title, message, type = 'success', duration = 3000) {
+        let container = document.querySelector('.toast-container');
+        
+        // Если контейнера нет, создаем
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+        
+        // Создаем toast элемент
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        // Иконки для разных типов
+        const icons = {
+            success: '✓',
+            error: '✕',
+            info: 'ℹ'
+        };
+        
+        toast.innerHTML = `
+            <div class="toast-icon">${icons[type] || '✓'}</div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                <div class="toast-message">${message || ''}</div>
+            </div>
+            <button class="toast-close">×</button>
+        `;
+        
+        // Добавляем обработчик на крестик
+        const closeBtn = toast.querySelector('.toast-close');
+        closeBtn.addEventListener('click', function() {
+            toast.classList.add('hiding');
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.parentElement.removeChild(toast);
+                }
+            }, 400);
+        });
+        
+        // Добавляем в контейнер
+        container.appendChild(toast);
+        
+        // Автоматическое удаление через заданное время
+        if (duration > 0) {
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.classList.add('hiding');
+                    setTimeout(() => {
+                        if (toast.parentElement) {
+                            toast.parentElement.removeChild(toast);
+                        }
+                    }, 400);
+                }
+            }, duration);
+        }
+    }
+
+    // Обновляем функцию addToCart
+    function addToCart(event, name, brand, price, image, meta) {
+        if (event && event.stopPropagation) {
+            event.stopPropagation();
+        }
+        
+        let cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
+        const existingItem = cart.find(item => item.name === name);
+        
+        if (existingItem) {
+            existingItem.qty += 1;
+        } else {
+            cart.push({ name, brand, price, image, meta, qty: 1 });
+        }
+        
+        localStorage.setItem('ps_cart', JSON.stringify(cart));
+        updateCartCount();
+        
+        // Показываем красивое уведомление
+        showToast(
+            'Товар добавлен в корзину',
+            `${name} — ${price} BYN`,
+            'success',
+            3000
+        );
+    }
+
+    // Функция для модального окна
+    function addToCartFromModal() {
+        const name = document.getElementById('modalTitle').textContent;
+        const brand = document.getElementById('modalBrand').textContent;
+        const price = document.getElementById('modalPrice').textContent.replace(' BYN', '');
+        const image = document.getElementById('modalImg').src;
+        
+        addToCart(null, name, brand, price, image, '');
+    }
 </script>
 </body>
 </html>
