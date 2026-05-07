@@ -438,6 +438,14 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
         applyTheme(newTheme);
     });
 
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+        document.getElementById('cartCount').textContent = '(' + totalItems + ')';
+    }
+
+    updateCartCount();
+
     // Инициализация при загрузке страницы
     applyTheme(savedTheme);
 </script>

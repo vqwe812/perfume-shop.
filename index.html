@@ -69,30 +69,9 @@ header { background: var(--bg-header); }
 input, select, textarea { background: var(--bg-input); border-color: var(--border-color); color: var(--text-main); }
 .hero { background: var(--hero-bg); }
 footer { background: var(--footer-bg); color: var(--footer-text); }
-.nav a { color: var(--text-main); }
+
 .product-meta, .page-header p, .cart-item-meta { color: var(--text-muted); }
 
-/* Стили кнопки темы */
-.theme-toggle {
-    background: transparent;
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    transition: all 0.3s;
-    flex-shrink: 0;
-}
-.theme-toggle:hover {
-    background: var(--bg-card);
-    border-color: #97bc62;
-    transform: scale(1.05);
-}
-.icon-dark { display: none; }
 /* === Стили для бегущей строки === */
 .marquee-section {
     padding: 40px 0;
@@ -199,21 +178,6 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
 }
 .marquee-track.dark-theme .marquee-card h4 { color: #fff; }
 .marquee-track.dark-theme .marquee-card .price { color: #97bc62; }
-        :root {
-            /* Основные цвета */
-            --primary-color: #2c5f2d;
-            --secondary-color: #97bc62;
-            --accent-color: #e74c3c;
-            --text-color: #4a4a4a;
-            --light-bg: #f5f7f0;
-            --white: #ffffff;
-            
-            /* Базовые размеры (будут меняться через media queries) */
-            --base-font-size: 16px;
-            --container-max-width: 1200px;
-            --section-padding: 80px;
-            --grid-gap: 30px;
-        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -240,42 +204,7 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             padding: 0 clamp(15px, 3vw, 30px); 
         }
         
-        /* === ШАПКА === */
-        header {
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            padding: clamp(15px, 2vw, 20px) 0; 
-            box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-        }
-        
-        nav ul { 
-            display: flex; 
-            list-style: none; 
-            gap: clamp(15px, 3vw, 35px); 
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        nav a:hover { color: var(--primary-color); }
-        
-        .cart-btn {
-            background: linear-gradient(135deg, var(--primary-color), #1e4220); 
-            color: white;
-            padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2.5vw, 25px); 
-            border-radius: 25px; 
-            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
-            font-weight: 500;
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: all 0.3s ease; 
-            text-decoration: none;
-        }
-        
-        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+       
 
         /* === HERO БЛОК === */
         .hero {
