@@ -872,7 +872,12 @@
         </section>
 <!-- === БЛОК БЕГУЩЕЙ СТРОКИ (ЗАДАНИЕ 3) === -->
 <section class="marquee-section">
-    <h2 class="section-title">🔥 Хиты продаж</h2>
+    <h2 class="section-title">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="#97bc62" style="vertical-align: middle; margin-right: 10px;">
+        <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+    </svg>
+    Хиты продаж
+</h2>
     
     <div class="marquee-window">
         <div class="marquee-track" id="marqueeTrack">
@@ -1173,7 +1178,7 @@
         updateCartCount();
     </script>
 <script>
-    // 1. Данные для товаров (исправленные пути к картинкам)
+    // 1. Данные для товаров 
     const marqueeProducts = [
         { name: "Chanel №5", price: "420 BYN", img: "chanel-n5.jpg" },
         { name: "Dior J'adore", price: "330 BYN", img: "dior-jadore.jpg" },
