@@ -4,125 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты | PerfumeShop</title>
-    
-    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <!-- Основные стили сайта -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- === 1. Подключение jQuery и jQuery UI (Требование задания) === -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-
-    <!-- Дополнительные стили для формы -->
     <style>
-        /* Стили формы (добавь их в style.css или оставь здесь) */
-        .form-section {
-            max-width: 700px;
-            margin: 40px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-        }
-        
-        .form-group { margin-bottom: 20px; position: relative; }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #4a4a4a;
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e8f5e9;
-            border-radius: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: #fafbfc;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #97bc62;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(151, 188, 98, 0.2);
-        }
-
-        textarea.form-control { min-height: 120px; resize: vertical; }
-
-        /* Стили ошибок */
-        .form-control.error {
-            border-color: #e74c3c;
-            background: #fff5f5;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: none; /* Скрыто по умолчанию */
-            font-weight: 500;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #2c5f2d, #1e4220);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
-        }
-
-        /* Стилизация диалогового окна jQuery UI под тему сайта */
-        .ui-dialog-titlebar {
-            background: #2c5f2d;
-            color: white;
-            border: none;
-            border-radius: 12px 12px 0 0;
-        }
-        .ui-dialog {
-            border-radius: 12px;
-            border: none;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-        .ui-widget-content {
-            border: none;
-            padding: 20px;
+        .info-page { padding: 60px 0; min-height: 70vh; }
+        .info-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #2c5f2d;
             text-align: center;
-            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
+        .info-title svg { width: 50px; height: 50px; }
+        .info-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: clamp(30px, 5vw, 50px);
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .contact-card {
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.1), rgba(44, 95, 45, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 4px solid #97bc62;
+            transition: transform 0.3s;
+        }
+        .contact-card:hover { transform: translateY(-5px); }
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+        }
+        .contact-icon svg { width: 50px; height: 50px; }
+        .contact-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #2c5f2d;
+            margin-bottom: 10px;
+        }
+        .contact-card p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .contact-card a {
+            color: #2c5f2d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .contact-card a:hover { color: #97bc62; }
         
-        [data-theme="dark"] .form-section {
-            background: #2a2a2a;
+        .work-hours {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
         }
-        [data-theme="dark"] .form-control {
-            background: #333;
-            color: #fff;
-            border-color: #444;
+        .work-hours h3 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #2c5f2d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        [data-theme="dark"] .form-group label { color: #e0e0e0; }
+        .work-hours ul {
+            list-style: none;
+            padding: 0;
+        }
+        .work-hours li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .work-hours li:last-child { border-bottom: none; }
+        
+        [data-theme="dark"] .info-content { background: #2a2a2a; }
+        [data-theme="dark"] .contact-card {
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.15), rgba(44, 95, 45, 0.15));
+        }
+        [data-theme="dark"] .contact-card p { color: #a8a8a8; }
+        [data-theme="dark"] .work-hours { background: #222; }
+        [data-theme="dark"] .work-hours li { border-bottom-color: #333; }
     </style>
 </head>
 <body>
-
-    <!-- Шапка -->
     <header>
         <div class="container">
             <div class="header-content">
@@ -136,8 +117,6 @@
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
                         <li><a href="favorites.html">Любимое</a></li>
-                        <!-- Ссылка с якорем для плавной прокрутки -->
-                        <li><a href="#contact-form" class="scroll-link">Контакты</a></li>
                         <li><a href="cart.html" class="cart-btn">🛒 Корзина</a></li>
                     </ul>
                 </nav>
@@ -146,166 +125,116 @@
     </header>
 
     <main class="container info-page">
-        <h1 class="info-title">Свяжитесь с нами</h1>
+        <h1 class="info-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Контакты
+        </h1>
+        <div class="info-content">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <h3>Телефон</h3>
+                    <p><a href="tel:+375293325510">+375 (29) 332-55-10</a></p>
+                    <p><a href="tel:+375293368378">+375 (29) 336-83-78</a></p>
+                </div>
 
-        <!-- Блок с информацией (остался от прошлой версии) -->
-        <div class="contact-grid">
-            <div class="contact-card">
-                <h3>📞 Телефон</h3>
-                <p>+375 (29) 123-45-67</p>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:info@perfumeshop.by">info@perfumeshop.by</a></p>
+                    <p><a href="mailto:support@perfumeshop.by">support@perfumeshop.by</a></p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Адрес</h3>
+                    <p>г. Минск, ул. Примерная, 812</p>
+                    <p>офис 777</p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Мессенджеры</h3>
+                    <p><a href="#">Telegram @hwanlis</a></p>
+                    <p><a href="#">Instagram @hwlisv</a></p>
+                </div>
             </div>
-            <div class="contact-card">
-                <h3>✉️ Email</h3>
-                <p>info@perfumeshop.by</p>
+
+            <div class="work-hours">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    Режим работы
+                </h3>
+                <ul>
+                    <li><span>Понедельник - Пятница</span> <span>9:00 - 19:00</span></li>
+                    <li><span>Суббота</span> <span>10:00 - 17:00</span></li>
+                    <li><span>Воскресенье</span> <span>Выходной</span></li>
+                </ul>
             </div>
-            <div class="contact-card">
-                <h3>📍 Адрес</h3>
-                <p>г. Минск, ул. Примерная, 123</p>
+
+            <div class="info-section">
+                <h3>Напишите нам</h3>
+                <p>Есть вопросы? Мы всегда на связи! Вы можете написать нам в любое время, и мы ответим вам в течение нескольких часов.</p>
             </div>
-        </div>
-
-        <!-- === 2. HTML Структура формы (Требование задания) === -->
-        <div class="form-section" id="contact-form">
-            <h2 style="text-align: center; margin-bottom: 30px; font-family: 'Cormorant Garamond', serif; color: #2c5f2d;">Напишите нам</h2>
-            
-            <form id="contactForm" novalidate>
-                <div class="form-group">
-                    <label for="name">Ваше имя</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Иван Иванов">
-                    <div class="error-message">Пожалуйста, введите ваше имя</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" class="form-control" placeholder="email@example.com">
-                    <div class="error-message">Введите корректный Email (например: name@mail.ru)</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="subject">Тема обращения</label>
-                    <select id="subject" name="subject" class="form-control">
-                        <option value="">Выберите тему...</option>
-                        <option value="order">Вопрос по заказу</option>
-                        <option value="return">Возврат товара</option>
-                        <option value="cooperation">Сотрудничество</option>
-                        <option value="other">Другое</option>
-                    </select>
-                    <div class="error-message">Выберите тему обращения</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Сообщение</label>
-                    <textarea id="message" name="message" class="form-control" placeholder="Ваш вопрос..."></textarea>
-                    <div class="error-message">Сообщение не может быть пустым</div>
-                </div>
-
-                <button type="submit" class="btn-submit">Отправить сообщение</button>
-            </form>
         </div>
     </main>
 
-    <!-- Скрытый блок для диалогового окна (jQuery UI Dialog) -->
-    <div id="successDialog" title="Успешно!" style="display: none;">
-        <p style="font-size: 1.1rem; color: #333;">✅ Ваше сообщение отправлено!</p>
-        <p style="color: #666; font-size: 0.9rem;">Менеджер свяжется с вами в ближайшее время.</p>
-    </div>
-
-    <!-- Подвал (оставил сокращенным для примера, вставь свой полный footer) -->
     <footer>
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>PerfumeShop</h4>
+                    <p>Интернет-магазин оригинальной парфюмерии с 2020 года.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <ul>
+                        <li><a href="delivery.html">Доставка</a></li>
+                        <li><a href="payment.html">Оплата</a></li>
+                        <li><a href="returns.html">Возврат</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <p>📞 +375 (29) 332-55-10</p>
+                    <p>✉️ info@perfumeshop.by</p>
+                </div>
+            </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
             </div>
         </div>
     </footer>
-
-    <!-- === 3. jQuery Скрипт (Логика и Валидация) === -->
-    <script>
-        $(document).ready(function() {
-            
-            // А. Плавная прокрутка к форме (Требование: Smooth Scroll)
-            $(".scroll-link").on('click', function(event) {
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hash = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top - 100 // -100px отступ для шапки
-                    }, 800, function(){
-                        window.location.hash = hash;
-                    });
-                }
-            });
-
-            // Б. Валидация формы
-            $("#contactForm").submit(function(event) {
-                event.preventDefault(); // Останавливаем стандартную отправку
-                let isValid = true;
-
-                // 1. Проверка Имени
-                if ($("#name").val().trim() === "") {
-                    showError($("#name"));
-                    isValid = false;
-                } else {
-                    clearError($("#name"));
-                }
-
-                // 2. Проверка Email (Регулярное выражение)
-                let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test($("#email").val().trim())) {
-                    showError($("#email"));
-                    isValid = false;
-                } else {
-                    clearError($("#email"));
-                }
-
-                // 3. Проверка Темы
-                if ($("#subject").val() === "") {
-                    showError($("#subject"));
-                    isValid = false;
-                } else {
-                    clearError($("#subject"));
-                }
-
-                // 4. Проверка Сообщения
-                if ($("#message").val().trim() === "") {
-                    showError($("#message"));
-                    isValid = false;
-                } else {
-                    clearError($("#message"));
-                }
-
-                // Если есть ошибки - анимация "Shake" (Тряска формы)
-                if (!isValid) {
-                    $(".form-section").effect("shake", { times: 3, distance: 10 }, 400);
-                    return;
-                }
-
-                // Если всё ОК - показываем диалог успеха
-                $("#successDialog").dialog({
-                    modal: true,
-                    width: 400,
-                    buttons: {
-                        "Отлично": function() {
-                            $(this).dialog("close");
-                            $("#contactForm")[0].reset(); // Очистка формы
-                        }
-                    },
-                    show: { effect: "bounce", duration: 500 },
-                    hide: { effect: "fade", duration: 300 }
-                });
-            });
-
-            // Функции-помощники для ошибок
-            function showError(element) {
-                element.addClass("error");
-                element.next(".error-message").slideDown(200);
-            }
-
-            function clearError(element) {
-                element.removeClass("error");
-                element.next(".error-message").slideUp(200);
-            }
-        });
-    </script>
 </body>
 </html>

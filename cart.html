@@ -327,29 +327,26 @@
                     <h2>Ваши товары</h2>
                     ${itemsHTML}
                 </div>
-                <div class="cart-summary">
-                    <h2>Итого</h2>
-                    <div class="summary-row">
-                        <span>Товары (${cart.reduce((sum, i) => sum + i.qty, 0)} шт.)</span>
-                        <span>${subtotal} BYN</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Доставка</span>
-                        <span style="color:${delivery === 0 ? '#97bc62' : '#4a4a4a'};">
-                            ${delivery === 0 ? 'Бесплатно' : delivery + ' BYN'}
-                        </span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>К оплате</span>
-                        <span>${grandTotal} BYN</span>
-                    </div>
-                    <div class="promo-code">
-                        <input type="text" placeholder="Промокод">
-                        <button>Применить</button>
-                    </div>
-                    <a href="checkout.html" class="checkout-btn" style="text-decoration:none; display:block; text-align:center;">Оформить заказ</a>
-                    <p style="text-align:center; font-size:12px; color:#999; margin-top:15px;">
-                        Бесплатная доставка от 100 BYN
+               <div class="cart-summary">
+    <h2>Итого</h2>
+    
+    <div class="summary-row">
+        <span>Товары (<span id="itemCount">2</span> шт.)</span>
+        <span id="cartSubtotal">810 BYN</span>
+    </div>
+    
+    <div class="summary-row">
+        <span>Доставка</span>
+        <span id="cartDelivery">Бесплатно</span>
+    </div>
+
+    <div class="summary-row total-row">
+        <span>К оплате</span>
+        <span id="cartFinalTotal" style="font-size: 1.4rem; font-weight: 700; color: #2c5f2d;">810 BYN</span>
+</div>
+<button class="checkout-btn" onclick="window.location.href='checkout.html'">ОФОРМИТЬ ЗАКАЗ</button>
+    <p style="text-align:center; font-size:0.8rem; color:#888; margin-top:10px;">Бесплатная доставка от 100 BYN</p>
+</div>
                     </p>
                 </div>
             `;

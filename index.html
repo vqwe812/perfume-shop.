@@ -848,48 +848,15 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
                     <div class="logo-icon">🌸</div>
                     PerfumeShop
                 </a>
-               <!-- === ДИНАМИЧЕСКОЕ МЕНЮ (ПР №6 Задание 4) === -->
-<nav class="jquery-menu">
-    <ul class="menu-list" id="mainMenu">
-        <li class="menu-item">
-            <a href="index.html" class="menu-link active">Главная</a>
-        </li>
-        <li class="menu-item has-submenu">
-            <a href="catalog.html" class="menu-link">Каталог ▾</a>
-            <ul class="submenu">
-                <li><a href="catalog.html?gender=women">Женские ароматы</a></li>
-                <li><a href="catalog.html?gender=men">Мужские ароматы</a></li>
-                <li><a href="catalog.html?gender=unisex">Унисекс</a></li>
-                <li><a href="catalog.html?new=true">Новинки</a></li>
-                <li><a href="catalog.html?sale=true">Скидки</a></li>
-            </ul>
-        </li>
-        <li class="menu-item has-submenu">
-            <a href="#" class="menu-link">Бренды ▾</a>
-            <ul class="submenu">
-                <li><a href="catalog.html?brand=chanel">Chanel</a></li>
-                <li><a href="catalog.html?brand=dior">Dior</a></li>
-                <li><a href="catalog.html?brand=gucci">Gucci</a></li>
-                <li><a href="catalog.html?brand=ysl">Yves Saint Laurent</a></li>
-                <li><a href="catalog.html?brand=versace">Versace</a></li>
-                <li><a href="catalog.html?brand=tomford">Tom Ford</a></li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="about.html" class="menu-link">О магазине</a>
-        </li>
-        <li class="menu-item">
-            <a href="contacts.html" class="menu-link">Контакты</a>
-        </li>
-    </ul>
-    
-    <!-- Поиск с Autocomplete -->
-    <div class="menu-search">
-        <input type="text" id="menuSearch" placeholder="Поиск по сайту..." autocomplete="off">
-        <button type="button" class="search-btn">🔍</button>
-    </div>
-</nav>
-<!-- === КОНЕЦ МЕНЮ === -->
+                <nav>
+                    <ul>
+                        <li><a href="index.html" style="color:#2c5f2d; font-weight:600;">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина <span id="cartCount">(0)</span></a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </header>
@@ -1695,125 +1662,6 @@ function showBrandInfo(brandKey) {
 
     // Запуск
     initGallery();
-</script>
-<script>
-// === ДИНАМИЧЕСКОЕ МЕНЮ (ПР №6 Задание 4) ===
-$(document).ready(function() {
-    
-    // 1. Выпадающие подменю при наведении (hover) с fade эффектами
-    $('.has-submenu').hover(
-        function() {
-            // Показываем подменю с эффектом fadeIn
-            $(this).find('.submenu').stop(true, true).fadeIn(300).css('display', 'block');
-        },
-        function() {
-            // Скрываем подменю с эффектом fadeOut
-            $(this).find('.submenu').stop(true, true).fadeOut(200);
-        }
-    );
-    
-    // 2. Поддержка клика для мобильных устройств
-    $('.has-submenu > .menu-link').on('click', function(e) {
-        if (window.innerWidth <= 900) {
-            e.preventDefault();
-            $(this).next('.submenu').fadeToggle(250);
-        }
-    });
-    
-    // 3. Сохранение активного пункта меню (на основе URL)
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const currentQuery = window.location.search;
-    
-    $('.menu-link').each(function() {
-        const linkHref = $(this).attr('href');
-        
-        // Проверяем точное совпадение или совпадение без query string
-        if (linkHref === currentPage || linkHref === currentPage + currentQuery) {
-            $(this).addClass('active');
-            // Добавляем активный класс родительскому элементу
-            $(this).closest('.has-submenu').find('> .menu-link').addClass('active');
-        }
-    });
-    
-    // 4. Поиск с jQuery UI Autocomplete
-    const menuItems = [
-        { label: "Главная страница", value: "Главная", url: "index.html", category: "Страницы" },
-        { label: "Каталог парфюмерии", value: "Каталог", url: "catalog.html", category: "Страницы" },
-        { label: "Женские ароматы", value: "Женские", url: "catalog.html?gender=women", category: "Категории" },
-        { label: "Мужские ароматы", value: "Мужские", url: "catalog.html?gender=men", category: "Категории" },
-        { label: "Унисекс", value: "Унисекс", url: "catalog.html?gender=unisex", category: "Категории" },
-        { label: "Новинки", value: "Новинки", url: "catalog.html?new=true", category: "Категории" },
-        { label: "Скидки", value: "Скидки", url: "catalog.html?sale=true", category: "Категории" },
-        { label: "О магазине", value: "О нас", url: "about.html", category: "Страницы" },
-        { label: "Контакты", value: "Контакты", url: "contacts.html", category: "Страницы" },
-        { label: "Доставка", value: "Доставка", url: "delivery.html", category: "Информация" },
-        { label: "Оплата", value: "Оплата", url: "payment.html", category: "Информация" },
-        { label: "Возврат", value: "Возврат", url: "returns.html", category: "Информация" },
-        { label: "Chanel", value: "Chanel", url: "catalog.html?brand=chanel", category: "Бренды" },
-        { label: "Dior", value: "Dior", url: "catalog.html?brand=dior", category: "Бренды" },
-        { label: "Gucci", value: "Gucci", url: "catalog.html?brand=gucci", category: "Бренды" },
-        { label: "Yves Saint Laurent", value: "YSL", url: "catalog.html?brand=ysl", category: "Бренды" },
-        { label: "Versace", value: "Versace", url: "catalog.html?brand=versace", category: "Бренды" },
-        { label: "Tom Ford", value: "Tom Ford", url: "catalog.html?brand=tomford", category: "Бренды" },
-        { label: "Chanel №5", value: "Chanel 5", url: "catalog.html?product=chanel-n5", category: "Товары" },
-        { label: "Dior J'adore", value: "J'adore", url: "catalog.html?product=dior-jadore", category: "Товары" },
-        { label: "Gucci Bloom", value: "Bloom", url: "catalog.html?product=gucci-bloom", category: "Товары" },
-        { label: "YSL Libre", value: "Libre", url: "catalog.html?product=ysl-libre", category: "Товары" },
-        { label: "Корзина", value: "Корзина", url: "cart.html", category: "Страницы" },
-        { label: "Избранное", value: "Избранное", url: "favorites.html", category: "Страницы" }
-    ];
-    
-    $("#menuSearch").autocomplete({
-        source: function(request, response) {
-            const term = request.term.toLowerCase();
-            const filtered = menuItems.filter(function(item) {
-                return item.label.toLowerCase().includes(term) || 
-                       item.value.toLowerCase().includes(term) ||
-                       item.category.toLowerCase().includes(term);
-            });
-            response(filtered);
-        },
-        minLength: 2,
-        select: function(event, ui) {
-            if (ui.item.url) {
-                window.location.href = ui.item.url;
-            }
-        },
-        focus: function(event, ui) {
-            $("#menuSearch").val(ui.item.label);
-            return false;
-        }
-    })
-    .autocomplete("instance")._renderItem = function(ul, item) {
-        // Кастомный рендеринг с категориями
-        return $("<li>")
-            .attr("data-value", item.value)
-            .append("<div style='display:flex; justify-content:space-between; align-items:center;'>" +
-                    "<span style='font-weight:500;'>" + item.label + "</span>" +
-                    "<span style='font-size:0.75rem; color:#97bc62; margin-left:10px;'>" + item.category + "</span>" +
-                    "</div>")
-            .appendTo(ul);
-    };
-    
-    // 5. Анимация при клике на поиск
-    $(".search-btn").on("click", function() {
-        $("#menuSearch").focus();
-        $("#menuSearch").effect("highlight", {color: "#97bc62"}, 500);
-    });
-    
-    // 6. Закрытие подменю при клике вне меню
-    $(document).on("click", function(e) {
-        if (!$(e.target).closest(".jquery-menu").length) {
-            $(".submenu").fadeOut(200);
-        }
-    });
-    
-    // 7. Эффект появления меню при загрузке страницы
-    $(".menu-item").each(function(index) {
-        $(this).hide().fadeIn(300 + (index * 100));
-    });
-    
-});
 </script>
 </body>
 </html>
