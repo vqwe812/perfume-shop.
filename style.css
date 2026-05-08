@@ -1802,159 +1802,248 @@ header, footer, .product-card, .modal-content, .cart-summary,
                 box-shadow var(--transition-speed) ease,
                 border-color var(--transition-speed) ease;
 }
-/* === jQuery Галерея === */
-.jquery-gallery-section {
-    padding: 60px 0;
-    background: linear-gradient(135deg, rgba(232, 245, 233, 0.3), rgba(255, 248, 225, 0.3));
-}
-
-.gallery-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.gallery-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+/* === ДИНАМИЧЕСКОЕ МЕНЮ С jQuery === */
+.jquery-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
 }
 
-.thumb-item {
-    cursor: pointer;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    aspect-ratio: 1/1;
-    background: #f8f9fa;
+.menu-list {
     display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.thumb-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(44, 95, 45, 0.2);
-}
-
-.thumb-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s;
-}
-
-.thumb-item:hover img {
-    transform: scale(1.1);
-}
-
-/* Стили модального окна jQuery UI */
-.ui-dialog.custom-gallery-dialog {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    border: none;
+    list-style: none;
+    margin: 0;
     padding: 0;
+    gap: 5px;
 }
 
-.ui-dialog-titlebar {
-    background: #2c5f2d;
-    color: white;
-    border: none;
-    border-radius: 20px 20px 0 0;
-    padding: 15px 20px;
-}
-
-.ui-dialog-titlebar-close {
-    display: none !important; /* Скрываем стандартный крестик */
-}
-
-.modal-gallery-content {
+.menu-item {
     position: relative;
-    background: #f8f9fa;
+}
+
+.menu-link {
+    display: block;
+    padding: 10px 15px;
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.menu-link:hover,
+.menu-link.active {
+    background: rgba(151, 188, 98, 0.15);
+    color: #2c5f2d;
+}
+
+/* Подменю */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 220px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    z-index: 1000;
+    display: none; /* Скрыто по умолчанию */
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.submenu li a:hover {
+    background: linear-gradient(135deg, rgba(151, 188, 98, 0.1), rgba(44, 95, 45, 0.1));
+    color: #2c5f2d;
+    padding-left: 25px;
+}
+
+/* Поиск с Autocomplete */
+.menu-search {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
-    min-height: 300px;
 }
 
-#modalMainImage {
-    max-width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    border-radius: 10px;
-}
-
-.modal-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.9);
-    border: none;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+.menu-search input {
+    padding: 8px 35px 8px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    width: 180px;
     transition: all 0.3s;
-    color: #2c5f2d;
-    z-index: 10;
-}
-
-.modal-nav-btn:hover {
-    background: #2c5f2d;
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-}
-
-.modal-prev { left: 15px; }
-.modal-next { right: 15px; }
-
-.modal-caption {
-    text-align: center;
-    padding: 15px;
-    font-size: 1.1rem;
-    color: #4a4a4a;
-    font-weight: 500;
     background: white;
 }
 
-.modal-close-btn {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #2c5f2d, #1e4220);
-    color: white;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
+.menu-search input:focus {
+    outline: none;
+    border-color: #97bc62;
+    width: 220px;
+    box-shadow: 0 0 0 3px rgba(151, 188, 98, 0.2);
 }
 
-.modal-close-btn:hover {
-    background: linear-gradient(135deg, #1e4220, #0f2610);
+.search-btn {
+    position: absolute;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #97bc62;
+    padding: 5px 8px;
+}
+
+/* Стили для jQuery UI Autocomplete */
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+    background: white !important;
+    padding: 5px 0 !important;
+}
+
+.ui-menu-item {
+    border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.ui-menu-item:last-child {
+    border-bottom: none !important;
+}
+
+.ui-menu-item a {
+    color: #4a4a4a !important;
+    font-size: 0.9rem !important;
+    padding: 10px 15px !important;
+}
+
+.ui-menu-item a:hover,
+.ui-state-focus {
+    background: linear-gradient(135deg, rgba(151, 188, 98, 0.15), rgba(44, 95, 45, 0.15)) !important;
+    color: #2c5f2d !important;
+    border: none !important;
+}
+
+.ui-widget.ui-widget-content {
+    border: none !important;
 }
 
 /* Темная тема */
-[data-theme="dark"] .jquery-gallery-section {
-    background: linear-gradient(135deg, rgba(30, 43, 30, 0.4), rgba(42, 48, 37, 0.4));
+[data-theme="dark"] .menu-link {
+    color: #e0e0e0;
 }
-[data-theme="dark"] .thumb-item { background: #252d25; }
-[data-theme="dark"] .ui-dialog.custom-gallery-dialog { background: #2a2a2a; }
-[data-theme="dark"] .modal-gallery-content { background: #222; }
-[data-theme="dark"] .modal-caption { background: #2a2a2a; color: #e8e8e8; }
-[data-theme="dark"] .modal-close-btn { background: #333; color: #fff; }
+
+[data-theme="dark"] .menu-link:hover,
+[data-theme="dark"] .menu-link.active {
+    background: rgba(151, 188, 98, 0.2);
+    color: #a8d8a8;
+}
+
+[data-theme="dark"] .submenu {
+    background: #2a2a2a;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .submenu li a {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .submenu li a:hover {
+    background: linear-gradient(135deg, rgba(151, 188, 98, 0.2), rgba(44, 95, 45, 0.2));
+    color: #a8d8a8;
+}
+
+[data-theme="dark"] .menu-search input {
+    background: #333;
+    color: #fff;
+    border-color: #444;
+}
+
+[data-theme="dark"] .ui-autocomplete {
+    background: #2a2a2a !important;
+}
+
+[data-theme="dark"] .ui-menu-item {
+    border-bottom-color: #3a3a3a !important;
+}
+
+[data-theme="dark"] .ui-menu-item a:hover,
+[data-theme="dark"] .ui-state-focus {
+    background: linear-gradient(135deg, rgba(151, 188, 98, 0.25), rgba(44, 95, 45, 0.25)) !important;
+    color: #a8d8a8 !important;
+}
 
 /* Адаптивность */
-@media (max-width: 768px) {
-    .gallery-thumbnails { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    #modalMainImage { max-height: 250px; }
-    .modal-nav-btn { width: 35px; height: 35px; font-size: 16px; }
+@media (max-width: 900px) {
+    .jquery-menu {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .menu-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .menu-search input {
+        width: 150px;
+    }
+    
+    .menu-search input:focus {
+        width: 180px;
+    }
 }
-@media (max-width: 480px) {
-    .gallery-thumbnails { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 600px) {
+    .menu-list {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .menu-item {
+        width: 100%;
+    }
+    
+    .menu-link {
+        text-align: center;
+        padding: 12px;
+    }
+    
+    .submenu {
+        position: static;
+        box-shadow: none;
+        background: rgba(151, 188, 98, 0.05);
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+    
+    .menu-search {
+        width: 100%;
+    }
+    
+    .menu-search input {
+        width: 100%;
+    }
+    
+    .menu-search input:focus {
+        width: 100%;
+    }
 }
