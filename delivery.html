@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доставка | PerfumeShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .info-page { padding: 60px 0; min-height: 70vh; }
+        .info-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .info-title svg {
+            width: 50px;
+            height: 50px;
+        }
+        .info-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: clamp(30px, 5vw, 50px);
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+        }
+        .info-section { margin-bottom: 35px; }
+        .info-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #2c5f2d;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #97bc62;
+        }
+        .info-section p, .info-section ul {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .info-section ul { padding-left: 25px; }
+        .info-section li { margin-bottom: 10px; }
+        
+        .delivery-card {
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.1), rgba(44, 95, 45, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #97bc62;
+            transition: transform 0.3s;
+        }
+        .delivery-card:hover {
+            transform: translateX(5px);
+        }
+        .delivery-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #2c5f2d;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .delivery-card h4 svg {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .price-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2c5f2d;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        .price-tag svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        [data-theme="dark"] .info-content { background: #2a2a2a; }
+        [data-theme="dark"] .info-section p,
+        [data-theme="dark"] .info-section ul { color: #a8a8a8; }
+        [data-theme="dark"] .delivery-card {
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.15), rgba(44, 95, 45, 0.15));
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html">Любимое</a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container info-page">
+        <h1 class="info-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            Доставка
+        </h1>
+        <div class="info-content">
+            <div class="info-section">
+                <h3>Способы доставки</h3>
+                
+                <div class="delivery-card">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        Курьерская доставка
+                    </h4>
+                    <p>Доставка курьером по Минску и областным городам. Курьер свяжется с вами за час до доставки.</p>
+                    <span class="price-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        от 8 BYN
+                    </span>
+                </div>
+
+                <div class="delivery-card">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                            <line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                        Пункты выдачи заказов
+                    </h4>
+                    <p>Сеть пунктов выдачи по всей Беларуси. Удобное расположение и график работы.</p>
+                    <span class="price-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        от 5 BYN
+                    </span>
+                </div>
+
+                <div class="delivery-card">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="7" width="18" height="13" rx="2" ry="2"/>
+                            <polyline points="7 7 7 3 17 3 17 7"/>
+                            <line x1="12" y1="21" x2="12" y2="21"/>
+                        </svg>
+                        Почта Беларуси
+                    </h4>
+                    <p>Доставка почтовым отправлением в любое отделение почты.</p>
+                    <span class="price-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        от 4 BYN
+                    </span>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Сроки доставки</h3>
+                <ul>
+                    <li><strong>Минск:</strong> 1-2 рабочих дня</li>
+                    <li><strong>Областные города:</strong> 2-3 рабочих дня</li>
+                    <li><strong>Регионы:</strong> 3-7 рабочих дней</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>Бесплатная доставка</h3>
+                <p>При заказе от <strong>150 BYN</strong> доставка по Минску осуществляется бесплатно!</p>
+            </div>
+
+            <div class="info-section">
+                <h3>Важная информация</h3>
+                <ul>
+                    <li>Все заказы страхуются на полную стоимость</li>
+                    <li>Перед отправкой каждый товар проверяется на целостность упаковки</li>
+                    <li>Вы можете отследить свой заказ по номеру накладной</li>
+                    <li>При получении обязательно проверьте целостность упаковки</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>PerfumeShop</h4>
+                    <p>Интернет-магазин оригинальной парфюмерии с 2020 года.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <ul>
+                        <li><a href="delivery.html">Доставка</a></li>
+                        <li><a href="payment.html">Оплата</a></li>
+                        <li><a href="returns.html">Возврат</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <p>📞 +375 (29) 332-55-10</p>
+                    <p>✉️ info@perfumeshop.by</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

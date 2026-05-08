@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Возврат и обмен | PerfumeShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .info-page { padding: 60px 0; min-height: 70vh; }
+        .info-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #2c5f2d;
+            text-align: center;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .info-title svg { width: 50px; height: 50px; }
+        .info-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: clamp(30px, 5vw, 50px);
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+        }
+        .info-section { margin-bottom: 35px; }
+        .info-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: #2c5f2d;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #97bc62;
+        }
+        .info-section p, .info-section ul {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .info-section ul { padding-left: 25px; }
+        .info-section li { margin-bottom: 10px; }
+        
+        .return-steps { counter-reset: step-counter; }
+        .return-step {
+            counter-increment: step-counter;
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.1), rgba(44, 95, 45, 0.1));
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #97bc62;
+            position: relative;
+            padding-left: 70px;
+            transition: transform 0.3s;
+        }
+        .return-step:hover { transform: translateX(5px); }
+        .return-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #2c5f2d;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .return-step h4 {
+            color: #2c5f2d;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .return-step p { margin: 0; }
+        
+        [data-theme="dark"] .info-content { background: #2a2a2a; }
+        [data-theme="dark"] .info-section p,
+        [data-theme="dark"] .info-section ul { color: #a8a8a8; }
+        [data-theme="dark"] .return-step {
+            background: linear-gradient(135deg, rgba(151, 188, 98, 0.15), rgba(44, 95, 45, 0.15));
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🌸</div>
+                    PerfumeShop
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="about.html">О магазине</a></li>
+                        <li><a href="favorites.html">Любимое</a></li>
+                        <li><a href="cart.html" class="cart-btn">🛒 Корзина</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container info-page">
+        <h1 class="info-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="1 4 1 10 7 10"/>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+            Возврат и обмен
+        </h1>
+        <div class="info-content">
+            <div class="info-section">
+                <h3>Право на возврат</h3>
+                <p>Согласно законодательству Республики Беларусь, вы имеете право вернуть или обменять товар в течение <strong>14 дней</strong> с момента покупки.</p>
+            </div>
+
+            <div class="info-section">
+                <h3>Условия возврата</h3>
+                <ul>
+                    <li>Товар не был в употреблении</li>
+                    <li>Сохранена заводская упаковка и пломбы</li>
+                    <li>Сохранен товарный вид и потребительские свойства</li>
+                    <li>Имеется чек или иной документ, подтверждающий покупку</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>Как оформить возврат</h3>
+                <div class="return-steps">
+                    <div class="return-step">
+                        <h4>Свяжитесь с нами</h4>
+                        <p>Позвоните по телефону или напишите на email с указанием номера заказа и причины возврата.</p>
+                    </div>
+                    <div class="return-step">
+                        <h4>Подготовьте товар</h4>
+                        <p>Упакуйте товар в оригинальную упаковку, приложите чек и заполненное заявление на возврат.</p>
+                    </div>
+                    <div class="return-step">
+                        <h4>Отправьте или передайте товар</h4>
+                        <p>Доставьте товар в наш офис или отправьте почтой/курьером за наш счет.</p>
+                    </div>
+                    <div class="return-step">
+                        <h4>Получите возврат средств</h4>
+                        <p>После проверки товара мы вернем деньги в течение 3-5 рабочих дней.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Возврат денежных средств</h3>
+                <ul>
+                    <li><strong>Наличными:</strong> при возврате в офисе</li>
+                    <li><strong>На банковскую карту:</strong> в течение 3-10 рабочих дней</li>
+                    <li><strong>На расчетный счет:</strong> для юридических лиц</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>Важно!</h3>
+                <p>Парфюмерия надлежащего качества может быть возвращена только при условии сохранения заводской упаковки и пломб. Товары в вскрытой упаковке возврату не подлежат (согласно Постановлению Совета Министров РБ №31).</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>PerfumeShop</h4>
+                    <p>Интернет-магазин оригинальной парфюмерии с 2020 года.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Покупателям</h4>
+                    <ul>
+                        <li><a href="delivery.html">Доставка</a></li>
+                        <li><a href="payment.html">Оплата</a></li>
+                        <li><a href="returns.html">Возврат</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <p>📞 +375 (29) 332-55-10</p>
+                    <p>✉️ info@perfumeshop.by</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -233,7 +233,6 @@
                 </a>
                 <nav>
                     <ul>
-                        <li><button id="themeToggle" class="theme-toggle"><span class="icon-light">☀️</span><span class="icon-dark">🌙</span></button></li>
                         <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
@@ -390,79 +389,5 @@
 
         renderCart();
     </script>
-<script>
-    // 1. Получаем элементы DOM
-    const themeToggle = document.getElementById('themeToggle');
-    const htmlElement = document.documentElement;
-    const iconLight = themeToggle.querySelector('.icon-light');
-    const iconDark = themeToggle.querySelector('.icon-dark');
-
-    // 2. Проверяем сохранённую тему в localStorage
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    // Применяем тему при загрузке
-    function applyTheme(theme) {
-        // Изменяем атрибут data-theme у корневого элемента
-        htmlElement.setAttribute('data-theme', theme);
-        
-        // Меняем иконку через display (манипуляция DOM-свойствами)
-        if (theme === 'dark') {
-            iconLight.style.display = 'none';
-            iconDark.style.display = 'inline';
-        } else {
-            iconLight.style.display = 'inline';
-            iconDark.style.display = 'none';
-        }
-
-        // Изменяем фоновые изображения/градиенты, если не подходят под тему
-        updateBackgrounds(theme);
-    }
-
-    // Функция смены фонов (требование задания)
-    function updateBackgrounds(theme) {
-        const heroSection = document.querySelector('.hero');
-        const advantagesSection = document.querySelector('.advantages');
-        
-        if (heroSection) {
-            if (theme === 'dark') {
-                // Тёмный градиент для Hero
-                heroSection.style.background = 'linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%)';
-            } else {
-                // Светлый градиент по умолчанию
-                heroSection.style.background = 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%)';
-            }
-        }
-
-        if (advantagesSection) {
-            if (theme === 'dark') {
-                advantagesSection.style.background = 'linear-gradient(135deg, rgba(30, 43, 30, 0.6), rgba(42, 48, 37, 0.6))';
-            } else {
-                advantagesSection.style.background = 'linear-gradient(135deg, rgba(232, 245, 233, 0.5), rgba(255, 248, 225, 0.5))';
-            }
-        }
-    }
-
-    // 3. Назначаем обработчик события клика
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        // Сохраняем выбор пользователя
-        localStorage.setItem('theme', newTheme);
-        
-        // Применяем изменения
-        applyTheme(newTheme);
-    });
-
-    function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
-        const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-        document.getElementById('cartCount').textContent = '(' + totalItems + ')';
-    }
-
-    updateCartCount();
-    // Инициализация при загрузке страницы
-    applyTheme(savedTheme);
-</script>
 </body>
 </html>

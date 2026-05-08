@@ -1,6 +1,12 @@
 	<!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<!-- jQuery UI JS -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PerfumeShop - Парфюмерный магазин</title>
@@ -38,22 +44,6 @@
     --footer-bg: #2c2c2c;
     --footer-text: #aaaaaa;
 }
-
-/* === ТЁМНАЯ ТЕМА === */
-[data-theme="dark"] {
-    --bg-body: linear-gradient(135deg, #1a1f1a 0%, #232b23 50%, #2a3025 100%);
-    --bg-card: #252d25;
-    --bg-header: rgba(30, 35, 30, 0.95);
-    --bg-input: #2d352d;
-    --text-main: #e8f5e9;
-    --text-muted: #a8b5a8;
-    --border-color: #3a453a;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --hero-bg: linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%);
-    --footer-bg: #151915;
-    --footer-text: #8a958a;
-}
-
 /* Применение переменных */
 body {
     background: var(--bg-body);
@@ -69,30 +59,9 @@ header { background: var(--bg-header); }
 input, select, textarea { background: var(--bg-input); border-color: var(--border-color); color: var(--text-main); }
 .hero { background: var(--hero-bg); }
 footer { background: var(--footer-bg); color: var(--footer-text); }
-.nav a { color: var(--text-main); }
+
 .product-meta, .page-header p, .cart-item-meta { color: var(--text-muted); }
 
-/* Стили кнопки темы */
-.theme-toggle {
-    background: transparent;
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    transition: all 0.3s;
-    flex-shrink: 0;
-}
-.theme-toggle:hover {
-    background: var(--bg-card);
-    border-color: #97bc62;
-    transform: scale(1.05);
-}
-.icon-dark { display: none; }
 /* === Стили для бегущей строки === */
 .marquee-section {
     padding: 40px 0;
@@ -199,21 +168,6 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
 }
 .marquee-track.dark-theme .marquee-card h4 { color: #fff; }
 .marquee-track.dark-theme .marquee-card .price { color: #97bc62; }
-        :root {
-            /* Основные цвета */
-            --primary-color: #2c5f2d;
-            --secondary-color: #97bc62;
-            --accent-color: #e74c3c;
-            --text-color: #4a4a4a;
-            --light-bg: #f5f7f0;
-            --white: #ffffff;
-            
-            /* Базовые размеры (будут меняться через media queries) */
-            --base-font-size: 16px;
-            --container-max-width: 1200px;
-            --section-padding: 80px;
-            --grid-gap: 30px;
-        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -240,42 +194,7 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             padding: 0 clamp(15px, 3vw, 30px); 
         }
         
-        /* === ШАПКА === */
-        header {
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            padding: clamp(15px, 2vw, 20px) 0; 
-            box-shadow: 0 2px 20px rgba(44, 95, 45, 0.08);
-            position: sticky; 
-            top: 0; 
-            z-index: 100;
-        }
-        
-        nav ul { 
-            display: flex; 
-            list-style: none; 
-            gap: clamp(15px, 3vw, 35px); 
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        nav a:hover { color: var(--primary-color); }
-        
-        .cart-btn {
-            background: linear-gradient(135deg, var(--primary-color), #1e4220); 
-            color: white;
-            padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2.5vw, 25px); 
-            border-radius: 25px; 
-            font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
-            font-weight: 500;
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: all 0.3s ease; 
-            text-decoration: none;
-        }
-        
-        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(44, 95, 45, 0.3); }
+       
 
         /* === HERO БЛОК === */
         .hero {
@@ -937,7 +856,6 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
                 </a>
                 <nav>
                     <ul>
-                        <li><button id="themeToggle" class="theme-toggle"><span class="icon-light">☀️</span><span class="icon-dark">🌙</span></button></li>
                         <li><a href="index.html" style="color:#2c5f2d; font-weight:600;">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
@@ -1172,6 +1090,27 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
                 </div>
             </div>
         </section>
+<!-- === jQuery Галерея (ПР №6 Задание 1) === -->
+<section class="jquery-gallery-section">
+    <h2 class="section-title">Коллекция ароматов</h2>
+    <div class="gallery-wrapper">
+        <div class="gallery-thumbnails" id="galleryThumbs">
+            <!-- Миниатюры генерируются автоматически -->
+        </div>
+    </div>
+</section>
+
+<!-- Модальное окно для увеличенного просмотра -->
+<div id="galleryModal" title="Просмотр аромата" style="display:none;">
+    <div class="modal-gallery-content">
+        <button class="modal-nav-btn modal-prev" title="Назад">❮</button>
+        <img id="modalMainImage" src="" alt="Perfume">
+        <button class="modal-nav-btn modal-next" title="Вперед">❯</button>
+    </div>
+    <div class="modal-caption" id="modalCaption"></div>
+    <button id="modalCloseBtn" class="modal-close-btn">✕ Закрыть</button>
+</div>
+<!-- === КОНЕЦ ГАЛЕРЕИ === -->
 <!-- === ГАЛЕРЕЯ (ЗАДАНИЕ 4) === -->
 <section class="gallery-section">
     <h2 class="section-title">
@@ -1268,17 +1207,43 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             </div>
         </section>
     </main>
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col"><h4>PerfumeShop</h4><p>Интернет-магазин оригинальной парфюмерии с 2020 года.</p></div>
-                <div class="footer-col"><h4>Покупателям</h4><ul><li><a href="#">Доставка</a></li><li><a href="#">Оплата</a></li><li><a href="#">Возврат</a></li></ul></div>
-                <div class="footer-col"><h4>Компания</h4><ul><li><a href="about.html">О нас</a></li><li><a href="#">Контакты</a></li></ul></div>
-                <div class="footer-col"><h4>Контакты</h4><p>📞 +375 (29) 123-45-67</p><p>✉️ info@perfumeshop.by</p></div>
+   <footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>PerfumeShop</h4>
+                <p>Интернет-магазин оригинальной парфюмерии с 2020 года.</p>
             </div>
-            <div class="footer-bottom"><p>&copy; 2026 PerfumeShop. Все права защищены.</p></div>
+            <div class="footer-col">
+                <h4>Покупателям</h4>
+                <ul>
+                    <!-- Ссылка на файл delivery.html -->
+                    <li><a href="delivery.html">Доставка</a></li>
+                    <!-- Ссылка на файл payment.html -->
+                    <li><a href="payment.html">Оплата</a></li>
+                    <!-- Ссылка на файл returns.html -->
+                    <li><a href="returns.html">Возврат</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Компания</h4>
+                <ul>
+                    <li><a href="about.html">О нас</a></li>
+                    <!-- Ссылка на файл contacts.html -->
+                    <li><a href="contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>📞 +375 (29) 332-55-10</p>
+                <p>✉️ info@perfumeshop.by</p>
+            </div>
         </div>
-    </footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PerfumeShop. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
 
     <div id="productModal" class="modal">
         <div class="modal-content">
@@ -1473,73 +1438,6 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
     window.toggleMarqueeStyle = function() {
         track.classList.toggle('dark-theme');
     }
-</script>
-<script>
-    // 1. Получаем элементы DOM
-    const themeToggle = document.getElementById('themeToggle');
-    const htmlElement = document.documentElement;
-    const iconLight = themeToggle.querySelector('.icon-light');
-    const iconDark = themeToggle.querySelector('.icon-dark');
-
-    // 2. Проверяем сохранённую тему в localStorage
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    // Применяем тему при загрузке
-    function applyTheme(theme) {
-        // Изменяем атрибут data-theme у корневого элемента
-        htmlElement.setAttribute('data-theme', theme);
-        
-        // Меняем иконку через display (манипуляция DOM-свойствами)
-        if (theme === 'dark') {
-            iconLight.style.display = 'none';
-            iconDark.style.display = 'inline';
-        } else {
-            iconLight.style.display = 'inline';
-            iconDark.style.display = 'none';
-        }
-
-        // Изменяем фоновые изображения/градиенты, если не подходят под тему
-        updateBackgrounds(theme);
-    }
-
-    // Функция смены фонов (требование задания)
-    function updateBackgrounds(theme) {
-        const heroSection = document.querySelector('.hero');
-        const advantagesSection = document.querySelector('.advantages');
-        
-        if (heroSection) {
-            if (theme === 'dark') {
-                // Тёмный градиент для Hero
-                heroSection.style.background = 'linear-gradient(135deg, #1e2b1e 0%, #253325 50%, #2a3025 100%)';
-            } else {
-                // Светлый градиент по умолчанию
-                heroSection.style.background = 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fff8e1 100%)';
-            }
-        }
-
-        if (advantagesSection) {
-            if (theme === 'dark') {
-                advantagesSection.style.background = 'linear-gradient(135deg, rgba(30, 43, 30, 0.6), rgba(42, 48, 37, 0.6))';
-            } else {
-                advantagesSection.style.background = 'linear-gradient(135deg, rgba(232, 245, 233, 0.5), rgba(255, 248, 225, 0.5))';
-            }
-        }
-    }
-
-    // 3. Назначаем обработчик события клика
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        // Сохраняем выбор пользователя
-        localStorage.setItem('theme', newTheme);
-        
-        // Применяем изменения
-        applyTheme(newTheme);
-    });
-
-    // Инициализация при загрузке страницы
-    applyTheme(savedTheme);
 </script>
 <script>
     // === ЗАДАНИЕ 2: ИНФОРМАЦИЯ О БРЕНДАХ ===
@@ -1793,111 +1691,93 @@ function showBrandInfo(brandKey) {
     initGallery();
 </script>
 <script>
-    // === TOAST УВЕДОМЛЕНИЯ ===
-    
-    // Создаем контейнер для toast при загрузке страницы
-    document.addEventListener('DOMContentLoaded', function() {
-        const toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container';
-        document.body.appendChild(toastContainer);
+$(document).ready(function() {
+    // Данные для галереи (6 ароматов)
+    const galleryData = [
+        { src: "chanel-n5.jpg", title: "Chanel №5", caption: "Классика, не поддающаяся времени. Цветочно-альдегидный аромат." },
+        { src: "dior-jadore.jpg", title: "Dior J'adore", caption: "Женственность в каждой ноте. Роскошный цветочный букет." },
+        { src: "gucci-bloom.jpg", title: "Gucci Bloom", caption: "Аромат цветущего сада. Ноты туберозы и жасмина." },
+        { src: "ysl-libre.jpg", title: "YSL Libre", caption: "Свобода быть собой. Лаванда и флердоранж." },
+        { src: "tom-ford-tobacco.jpg", title: "Tom Ford Tobacco Vanille", caption: "Тепло и роскошь. Табак, ваниль и специи." },
+        { src: "versace-eros.jpg", title: "Versace Eros", caption: "Страсть и энергия. Мята, яблоко и ваниль." }
+    ];
+
+    let currentIndex = 0;
+
+    // Генерация миниатюр
+    galleryData.forEach((item, index) => {
+        $('#galleryThumbs').append(`
+            <div class="thumb-item" data-index="${index}">
+                <img src="${item.src}" alt="${item.title}">
+            </div>
+        `);
     });
 
-    // Функция показа уведомления
-    function showToast(title, message, type = 'success', duration = 3000) {
-        let container = document.querySelector('.toast-container');
+    // Функция обновления содержимого модального окна
+    function updateModal(index) {
+        currentIndex = index;
+        const data = galleryData[index];
         
-        // Если контейнера нет, создаем
-        if (!container) {
-            container = document.createElement('div');
-            container.className = 'toast-container';
-            document.body.appendChild(container);
-        }
-        
-        // Создаем toast элемент
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        // Иконки для разных типов
-        const icons = {
-            success: '✓',
-            error: '✕',
-            info: 'ℹ'
-        };
-        
-        toast.innerHTML = `
-            <div class="toast-icon">${icons[type] || '✓'}</div>
-            <div class="toast-content">
-                <div class="toast-title">${title}</div>
-                <div class="toast-message">${message || ''}</div>
-            </div>
-            <button class="toast-close">×</button>
-        `;
-        
-        // Добавляем обработчик на крестик
-        const closeBtn = toast.querySelector('.toast-close');
-        closeBtn.addEventListener('click', function() {
-            toast.classList.add('hiding');
-            setTimeout(() => {
-                if (toast.parentElement) {
-                    toast.parentElement.removeChild(toast);
-                }
-            }, 400);
+        // Плавная смена изображения с эффектом jQuery UI
+        $('#modalMainImage').fadeOut(200, function() {
+            $(this).attr('src', data.src).attr('alt', data.title);
+            $(this).fadeIn(300);
         });
         
-        // Добавляем в контейнер
-        container.appendChild(toast);
-        
-        // Автоматическое удаление через заданное время
-        if (duration > 0) {
-            setTimeout(() => {
-                if (toast.parentElement) {
-                    toast.classList.add('hiding');
-                    setTimeout(() => {
-                        if (toast.parentElement) {
-                            toast.parentElement.removeChild(toast);
-                        }
-                    }, 400);
-                }
-            }, duration);
-        }
+        $('#modalCaption').text(`${data.title} — ${data.caption}`);
     }
 
-    // Обновляем функцию addToCart
-    function addToCart(event, name, brand, price, image, meta) {
-        if (event && event.stopPropagation) {
-            event.stopPropagation();
+    // Инициализация модального окна jQuery UI Dialog
+    $("#galleryModal").dialog({
+        autoOpen: false,
+        modal: true,
+        width: '90%',
+        maxWidth: 800,
+        show: { effect: "fade", duration: 400 },
+        hide: { effect: "fade", duration: 300 },
+        dialogClass: 'custom-gallery-dialog',
+        open: function() {
+            $('.ui-widget-overlay').addClass('custom-overlay');
         }
-        
-        let cart = JSON.parse(localStorage.getItem('ps_cart')) || [];
-        const existingItem = cart.find(item => item.name === name);
-        
-        if (existingItem) {
-            existingItem.qty += 1;
-        } else {
-            cart.push({ name, brand, price, image, meta, qty: 1 });
-        }
-        
-        localStorage.setItem('ps_cart', JSON.stringify(cart));
-        updateCartCount();
-        
-        // Показываем красивое уведомление
-        showToast(
-            'Товар добавлен в корзину',
-            `${name} — ${price} BYN`,
-            'success',
-            3000
-        );
-    }
+    });
 
-    // Функция для модального окна
-    function addToCartFromModal() {
-        const name = document.getElementById('modalTitle').textContent;
-        const brand = document.getElementById('modalBrand').textContent;
-        const price = document.getElementById('modalPrice').textContent.replace(' BYN', '');
-        const image = document.getElementById('modalImg').src;
-        
-        addToCart(null, name, brand, price, image, '');
-    }
+    // Клик по миниатюре
+    $(document).on('click', '.thumb-item', function() {
+        const index = $(this).data('index');
+        updateModal(index);
+        $("#galleryModal").dialog("open");
+    });
+
+    // Стрелки навигации
+    $(document).on('click', '.modal-prev', function() {
+        let newIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+        updateModal(newIndex);
+    });
+
+    $(document).on('click', '.modal-next', function() {
+        let newIndex = (currentIndex + 1) % galleryData.length;
+        updateModal(newIndex);
+    });
+
+    // Кнопка закрытия
+    $(document).on('click', '#modalCloseBtn', function() {
+        $("#galleryModal").dialog("close");
+    });
+
+    // Закрытие по клику на оверлей
+    $(document).on('click', '.ui-widget-overlay', function() {
+        $("#galleryModal").dialog("close");
+    });
+
+    // Управление с клавиатуры
+    $(document).on('keydown', function(e) {
+        if ($("#galleryModal").dialog("isOpen")) {
+            if (e.key === "ArrowLeft") $('.modal-prev').click();
+            if (e.key === "ArrowRight") $('.modal-next').click();
+            if (e.key === "Escape") $("#galleryModal").dialog("close");
+        }
+    });
+});
 </script>
 </body>
 </html>

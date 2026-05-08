@@ -143,27 +143,6 @@ nav a:hover::after {
     --section-padding: 80px;
     --grid-gap: 30px;
 }
-
-/* Тёмная тема (эстетичная, с плавным переходом) */
-[data-theme="dark"] {
-    --bg-body: linear-gradient(135deg, #1a1a1a 0%, #242424 50%, #1e1e1e 100%);
-    --bg-card: #2a2a2a;
-    --bg-header: rgba(30, 30, 30, 0.95);
-    --bg-input: #333333;
-    --bg-section: linear-gradient(135deg, rgba(42, 42, 42, 0.5), rgba(36, 36, 36, 0.5));
-    --bg-footer: #151515;
-    --text-main: #e8e8e8;
-    --text-muted: #a8a8a8;
-    --text-heading: #a8d8a8;
-    --border-color: #3a3a3a;
-    --border-light: #444444;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --shadow-hover: rgba(151, 188, 98, 0.25);
-    --accent: #a8d8a8;
-    --accent-light: #97bc62;
-    --accent-bg: rgba(151, 188, 98, 0.15);
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
@@ -1823,153 +1802,159 @@ header, footer, .product-card, .modal-content, .cart-summary,
                 box-shadow var(--transition-speed) ease,
                 border-color var(--transition-speed) ease;
 }
-// === УЛУЧШЕННЫЙ ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ===
-const themeToggle = document.getElementById('themeToggle');
-const htmlElement = document.documentElement;
-const iconLight = themeToggle.querySelector('.icon-light');
-const iconDark = themeToggle.querySelector('.icon-dark');
-
-// Проверяем сохранённую тему
-const savedTheme = localStorage.getItem('theme') || 'light';
-
-// Применяем тему без жёсткой смены фона
-function applyTheme(theme) {
-    htmlElement.setAttribute('data-theme', theme);
-    
-    if (theme === 'dark') {
-        iconLight.style.display = 'none';
-        iconDark.style.display = 'inline';
-    } else {
-        iconLight.style.display = 'inline';
-        iconDark.style.display = 'none';
-    }
+/* === jQuery Галерея === */
+.jquery-gallery-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.3), rgba(255, 248, 225, 0.3));
 }
 
-// Обработчик клика
-themeToggle.addEventListener('click', () => {
-    const currentTheme = htmlElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
-});
-
-// Инициализация
-applyTheme(savedTheme);
-/* === TOAST УВЕДОМЛЕНИЯ === */
-.toast-container {
-    position: fixed;
-    top: 100px;
-    right: 30px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    pointer-events: none;
+.gallery-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.toast {
-    background: white;
-    border-radius: 12px;
-    padding: 16px 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    min-width: 320px;
-    max-width: 450px;
-    pointer-events: auto;
-    animation: slideInRight 0.4s ease forwards;
-    border-left: 4px solid #97bc62;
+.gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px;
 }
 
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(400px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.toast.hiding {
-    animation: slideOutRight 0.4s ease forwards;
-}
-
-@keyframes slideOutRight {
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(400px);
-    }
-}
-
-.toast-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #97bc62, #2c5f2d);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 20px;
-    color: white;
-}
-
-.toast-content {
-    flex: 1;
-}
-
-.toast-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #2c5f2d;
-    margin-bottom: 3px;
-}
-
-.toast-message {
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.toast-close {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #999;
+.thumb-item {
     cursor: pointer;
-    padding: 0;
-    width: 28px;
-    height: 28px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    aspect-ratio: 1/1;
+    background: #f8f9fa;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.thumb-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(44, 95, 45, 0.2);
+}
+
+.thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.thumb-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Стили модального окна jQuery UI */
+.ui-dialog.custom-gallery-dialog {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    border: none;
+    padding: 0;
+}
+
+.ui-dialog-titlebar {
+    background: #2c5f2d;
+    color: white;
+    border: none;
+    border-radius: 20px 20px 0 0;
+    padding: 15px 20px;
+}
+
+.ui-dialog-titlebar-close {
+    display: none !important; /* Скрываем стандартный крестик */
+}
+
+.modal-gallery-content {
+    position: relative;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 300px;
+}
+
+#modalMainImage {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transition: all 0.3s;
+    color: #2c5f2d;
+    z-index: 10;
 }
 
-.toast-close:hover {
-    background: #f0f0f0;
-    color: #333;
+.modal-nav-btn:hover {
+    background: #2c5f2d;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
 }
 
+.modal-prev { left: 15px; }
+.modal-next { right: 15px; }
+
+.modal-caption {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.1rem;
+    color: #4a4a4a;
+    font-weight: 500;
+    background: white;
+}
+
+.modal-close-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #2c5f2d, #1e4220);
+    color: white;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.modal-close-btn:hover {
+    background: linear-gradient(135deg, #1e4220, #0f2610);
+}
+
+/* Темная тема */
+[data-theme="dark"] .jquery-gallery-section {
+    background: linear-gradient(135deg, rgba(30, 43, 30, 0.4), rgba(42, 48, 37, 0.4));
+}
+[data-theme="dark"] .thumb-item { background: #252d25; }
+[data-theme="dark"] .ui-dialog.custom-gallery-dialog { background: #2a2a2a; }
+[data-theme="dark"] .modal-gallery-content { background: #222; }
+[data-theme="dark"] .modal-caption { background: #2a2a2a; color: #e8e8e8; }
+[data-theme="dark"] .modal-close-btn { background: #333; color: #fff; }
+
+/* Адаптивность */
 @media (max-width: 768px) {
-    .toast-container {
-        top: auto;
-        bottom: 30px;
-        right: 15px;
-        left: 15px;
-    }
-    
-    .toast {
-        min-width: auto;
-        max-width: 100%;
-    }
+    .gallery-thumbnails { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    #modalMainImage { max-height: 250px; }
+    .modal-nav-btn { width: 35px; height: 35px; font-size: 16px; }
+}
+@media (max-width: 480px) {
+    .gallery-thumbnails { grid-template-columns: repeat(2, 1fr); }
 }
