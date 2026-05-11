@@ -853,7 +853,7 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
                 </a>
                 <nav>
                     <ul>
-                        <li><a href="index.html" style="color:#2c5f2d; font-weight:600;">Главная</a></li>
+                        <li><a href="index.html">Главная</a></li>
                         <li><a href="catalog.html">Каталог</a></li>
                         <li><a href="about.html">О магазине</a></li>
                         <li><a href="favorites.html">Любимое <span id="favCount">(0)</span></a></li>
@@ -882,7 +882,7 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
         <div class="banner-content">
             <span class="banner-tag">Специальное предложение</span>
             <h1>Твой идеальный парфюм</h1>
-            <p>Скидка 20% на первый заказ по промокоду <strong>START20</strong></p>
+            <p>Скидка 20% на первый заказ!</p>
             <a href="cart.html" class="banner-btn">Перейти в корзину</a>
         </div>
     </div>
@@ -1217,13 +1217,19 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
 </section>
 <!-- === КОНЕЦ ПРЕИМУЩЕСТВ === -->
 
-        <section class="newsletter">
-            <div class="container">
-                <h2>Подпишитесь на новинки и скидки</h2>
-                <p>Получайте эксклюзивные предложения первыми</p>
-                <form class="sub-form"><input type="email" placeholder="Ваш email" required><button type="submit">Подписаться</button></form>
-            </div>
-        </section>
+       <section class="newsletter">
+    <div class="container">
+        <h2>Подпишитесь на новинки и скидки</h2>
+        <p>Получайте эксклюзивные предложения первыми</p>
+        
+        <form class="sub-form" id="newsletterForm" novalidate>
+            <input type="text" id="newsEmail" placeholder="Ваш email">
+            <button type="submit" id="newsBtn">ПОДПИСАТЬСЯ</button>
+        </form>
+
+        <div id="newsMessage" style="margin-top: 20px; font-weight: 600; font-size: 1.1rem; display: none;"></div>
+    </div>
+</section>
     </main>
    <footer>
     <div class="container">
@@ -1773,6 +1779,120 @@ $(document).ready(function() {
 
     // Старт
     startTimer();
+});
+</script>
+<script>
+// === ЗАДАНИЕ 4 (ПР №7): Анимация галереи ===
+$(document).ready(function() {
+    
+    // 1. Делаем фото перетаскиваемыми (Draggable из jQuery UI)
+    $(".gallery-item").draggable({
+        revert: "invalid",      // Возвращать на место если бросили "мимо"
+        opacity: 0.6,           // Прозрачность при перетаскивании
+        cursor: "grabbing",     // Курсор "захват"
+        containment: "parent",  // Ограничить родительским контейнером
+        start: function() {
+            $(this).css("z-index", 999);
+        },
+        stop: function() {
+            $(this).css("z-index", "");
+        }
+    });
+
+    // 2. Fade In/Out эффект при клике на фото
+    $(document).on("click", ".gallery-item", function() {
+        const $item = $(this);
+        
+        // Fade Out (исчезновение)
+        $item.stop().animate({
+            opacity: 0.3
+        }, 200, function() {
+            // Fade In (появление)
+            $item.animate({
+                opacity: 1
+            }, 400);
+        });
+    });
+
+    // 3. Эффект при наведении (hover)
+    $(".gallery-item").hover(
+        function() {
+            $(this).stop().animate({
+                marginTop: "-10px",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+            }, 300);
+        },
+        function() {
+            $(this).stop().animate({
+                marginTop: "0px",
+                boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
+            }, 300);
+        }
+    );
+});
+</script>
+<script>
+$(document).ready(function() {
+    
+    // 1. Плавное расширение поля при клике (focus)
+    $('#newsEmail').on('focus', function() {
+        $(this).stop().animate({ width: '400px' }, 400);
+    }).on('blur', function() {
+        $(this).stop().animate({ width: '350px' }, 400);
+    });
+
+    // 2. Обработка отправки формы с анимациями
+    $('#newsletterForm').on('submit', function(e) {
+        e.preventDefault(); // Отключаем стандартную отправку и проверки браузера!
+        
+        const $input = $('#newsEmail');
+        const $msg = $('#newsMessage');
+        const email = $input.val().trim();
+        const $btn = $('#newsBtn');
+        
+        // Регулярка для проверки email (должен быть @ и точка)
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Анимация нажатия кнопки
+        $btn.animate({ fontSize: '16px' }, 100).animate({ fontSize: '14px' }, 100);
+
+        if (email === '' || !emailPattern.test(email)) {
+            // === ОШИБКА: КРАСНЫЙ ЦВЕТ ===
+            
+            // 1. Красная рамка (плавная анимация)
+            $input.stop().animate({ 
+                borderColor: '#e74c3c', // Красный цвет
+                borderWidth: '2px' 
+            }, 200);
+
+            // 2. Эффект тряски (если подключен jQuery UI)
+            if ($.ui && $.ui.effect) {
+                $input.effect("shake", { distance: 10, times: 2 }, 300);
+            }
+
+            // 3. Сообщение об ошибке (Fade In -> Fade Out)
+            $msg.html('❌ Введите корректный email (нужен @)')
+                .css('color', '#ffcccc')
+                .stop().fadeIn(300).delay(2000).fadeOut(300);
+
+        } else {
+            // === УСПЕХ: ЗЕЛЕНЫЙ ЦВЕТ ===
+
+            // 1. Зеленая рамка
+            $input.stop().animate({ 
+                borderColor: '#97bc62', // Зеленый цвет
+                borderWidth: '2px' 
+            }, 200);
+
+            // 2. Сообщение об успехе (Fade In -> Fade Out)
+            $msg.html('✅ Вы успешно подписаны!')
+                .css('color', '#a8d8a8')
+                .stop().fadeIn(300).delay(3000).fadeOut(300);
+            
+            // Очистить поле
+            $input.val('');
+        }
+    });
 });
 </script>
 </body>
