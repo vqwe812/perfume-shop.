@@ -863,6 +863,48 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             </div>
         </div>
     </header>
+<!-- === АНИМИРОВАННЫЙ БАННЕР (ПР №7 Задание 2 - Premium Version) === -->
+<section class="premium-banner" id="mainBanner">
+    <!-- Слайд 1 -->
+    <div class="banner-slide active" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&q=80&w=2070');">
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <span class="banner-tag">Коллекция 2026</span>
+            <h1>Искусство ароматов</h1>
+            <p>Эксклюзивные парфюмы от Chanel, Dior и Tom Ford</p>
+            <a href="catalog.html" class="banner-btn">Смотреть каталог</a>
+        </div>
+    </div>
+
+    <!-- Слайд 2 -->
+    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea477942653?auto=format&fit=crop&q=80&w=2070');">
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <span class="banner-tag">Специальное предложение</span>
+            <h1>Твой идеальный парфюм</h1>
+            <p>Скидка 20% на первый заказ по промокоду <strong>START20</strong></p>
+            <a href="cart.html" class="banner-btn">Перейти в корзину</a>
+        </div>
+    </div>
+
+    <!-- Слайд 3 -->
+    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&q=80&w=2070');">
+        <div class="banner-overlay"></div>
+        <div class="banner-content">
+            <span class="banner-tag">Бесплатная доставка</span>
+            <h1>Доставим быстро</h1>
+            <p>Бесплатная курьерская доставка по Минску от 100 BYN</p>
+            <a href="delivery.html" class="banner-btn">Подробнее</a>
+        </div>
+    </div>
+
+    <!-- Управление -->
+    <div class="banner-controls">
+        <button class="banner-arrow prev" id="bannerPrev">❮</button>
+        <div class="banner-dots" id="bannerDots"></div>
+        <button class="banner-arrow next" id="bannerNext">❯</button>
+    </div>
+</section>
 
     <main>
         <section class="hero">
@@ -1666,152 +1708,71 @@ function showBrandInfo(brandKey) {
     // Запуск
     initGallery();
 </script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<!-- Кнопка помощи -->
-<button id="helpButton" class="help-btn">💚 Помощь</button>
-
-<!-- Модальное окно -->
-<div id="helpModal" class="modal-overlay" style="display: none;">
-    <div class="modal-window">
-        <button class="modal-close" id="closeModal">✕</button>
-        <div class="modal-header">
-            <h2>💬 Напишите нам</h2>
-            <p>Заполните форму, и мы ответим в течение 15 минут</p>
-        </div>
-        <form id="helpForm">
-            <div class="form-group">
-                <label for="modalName">Ваше имя *</label>
-                <input type="text" id="modalName" placeholder="Иван Иванов">
-                <div class="error-msg">Введите имя</div>
-            </div>
-            <div class="form-group">
-                <label for="modalEmail">Email *</label>
-                <input type="email" id="modalEmail" placeholder="email@example.com">
-                <div class="error-msg">Введите корректный Email</div>
-            </div>
-            <div class="form-group">
-                <label for="modalMessage">Сообщение *</label>
-                <textarea id="modalMessage" rows="4" placeholder="Ваш вопрос..."></textarea>
-                <div class="error-msg">Введите сообщение</div>
-            </div>
-            <button type="submit" class="submit-btn">📩 Отправить сообщение</button>
-        </form>
-    </div>
-</div>
 <script>
-// === МОДАЛЬНОЕ ОКНО С jQuery (ПР №7 Задание 1) ===
 $(document).ready(function() {
+    // Инициализация точек
+    const $slides = $('.banner-slide');
+    const $dotsContainer = $('#bannerDots');
     
-    // Открытие окна (метод fadeIn)
-    $('#helpButton').on('click', function() {
-        $('#helpModal').fadeIn(300);
-        $('body').css('overflow', 'hidden'); // Блокируем прокрутку
+    $slides.each(function(index) {
+        const dot = $('<div class="dot"></div>').data('index', index);
+        if (index === 0) dot.addClass('active');
+        $dotsContainer.append(dot);
     });
     
-    // Закрытие окна (метод fadeOut)
-    function closeModal() {
-        $('#helpModal').fadeOut(300, function() {
-            $('body').css('overflow', ''); // Возвращаем прокрутку
-        });
+    const $dots = $('.dot');
+    let currentIndex = 0;
+    let autoSlide;
+
+    function showSlide(index) {
+        // Убираем активность с текущего
+        $slides.removeClass('active');
+        $dots.removeClass('active');
+        
+        // Добавляем активность новому
+        $slides.eq(index).addClass('active');
+        $dots.eq(index).addClass('active');
+        currentIndex = index;
     }
-    
-    $('#closeModal').on('click', closeModal);
-    
-    // Закрытие по клику на затемнение
-    $('#helpModal').on('click', function(e) {
-        if ($(e.target).is('#helpModal')) {
-            closeModal();
-        }
+
+    function nextSlide() {
+        let nextIndex = (currentIndex + 1) % $slides.length;
+        showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+        let prevIndex = (currentIndex - 1 + $slides.length) % $slides.length;
+        showSlide(prevIndex);
+    }
+
+    // Обработчики кликов
+    $('#bannerNext').click(function() {
+        nextSlide();
+        resetTimer();
     });
-    
-    // Закрытие по клавише Escape
-    $(document).on('keydown', function(e) {
-        if (e.key === 'Escape' && $('#helpModal').is(':visible')) {
-            closeModal();
-        }
+
+    $('#bannerPrev').click(function() {
+        prevSlide();
+        resetTimer();
     });
-    
-    // Валидация формы с анимацией
-    $('#helpForm').on('submit', function(e) {
-        e.preventDefault();
-        let isValid = true;
-        
-        // Проверка имени
-        const $name = $('#modalName');
-        if ($name.val().trim().length < 2) {
-            $name.addClass('error');
-            $name.next('.error-msg').addClass('show').hide().fadeIn(200);
-            isValid = false;
-        } else {
-            $name.removeClass('error');
-            $name.next('.error-msg').removeClass('show').fadeOut(200);
-        }
-        
-        // Проверка email
-        const $email = $('#modalEmail');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test($email.val().trim())) {
-            $email.addClass('error');
-            $email.next('.error-msg').addClass('show').hide().fadeIn(200);
-            isValid = false;
-        } else {
-            $email.removeClass('error');
-            $email.next('.error-msg').removeClass('show').fadeOut(200);
-        }
-        
-        // Проверка сообщения
-        const $message = $('#modalMessage');
-        if ($message.val().trim().length < 10) {
-            $message.addClass('error');
-            $message.next('.error-msg').addClass('show').hide().fadeIn(200);
-            isValid = false;
-        } else {
-            $message.removeClass('error');
-            $message.next('.error-msg').removeClass('show').fadeOut(200);
-        }
-        
-        // Если ошибка - трясём окно (эффект shake из jQuery UI)
-        if (!isValid) {
-            $('.modal-window').effect('shake', { distance: 10, times: 3 }, 400);
-            return;
-        }
-        
-        // Успешная отправка
-        const $btn = $(this).find('.submit-btn');
-        const originalText = $btn.html();
-        $btn.html('⏳ Отправка...').prop('disabled', true);
-        
-        // Имитация отправки
-        setTimeout(function() {
-            $('#helpForm').fadeOut(300, function() {
-                $(this).after(`
-                    <div class="success-message" style="text-align: center; padding: 40px 20px;">
-                        <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
-                        <h3 style="color: #2c5f2d; margin-bottom: 15px;">Сообщение отправлено!</h3>
-                        <p style="color: #666; margin-bottom: 20px;">Мы ответим вам в ближайшее время.</p>
-                        <button class="submit-btn" id="newMessageBtn">Отправить ещё</button>
-                    </div>
-                `);
-            });
-            
-            $('#newMessageBtn').on('click', function() {
-                $('#helpForm')[0].reset();
-                $('.success-message').fadeOut(300, function() {
-                    $(this).remove();
-                    $('#helpForm').fadeIn(300);
-                });
-            });
-        }, 1500);
+
+    $dots.click(function() {
+        showSlide($(this).data('index'));
+        resetTimer();
     });
-    
-    // Анимация полей при фокусе (метод animate)
-    $('.form-group input, .form-group textarea').on('focus', function() {
-        $(this).closest('.form-group').animate({
-            opacity: 0.8
-        }, 200).animate({
-            opacity: 1
-        }, 200);
-    });
+
+    // Автопрокрутка
+    function startTimer() {
+        autoSlide = setInterval(nextSlide, 5000); // 5 секунд
+    }
+
+    function resetTimer() {
+        clearInterval(autoSlide);
+        startTimer();
+    }
+
+    // Старт
+    startTimer();
 });
 </script>
 </body>
