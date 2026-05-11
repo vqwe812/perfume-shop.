@@ -1663,5 +1663,226 @@ function showBrandInfo(brandKey) {
     // Запуск
     initGallery();
 </script>
+<!-- === МОДАЛЬНОЕ ОКНО С ФОРМОЙ (ПР №7) === -->
+<div id="contactModal" class="contact-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="closeModal">✕</button>
+        
+        <div class="modal-header">
+            <h2>💬 Напишите нам</h2>
+            <p>Заполните форму, и мы свяжемся с вами в ближайшее время</p>
+        </div>
+        
+        <form id="contactForm" class="contact-form">
+            <div class="form-group">
+                <label for="modalName">Ваше имя *</label>
+                <input type="text" id="modalName" name="name" placeholder="Иван Иванов">
+                <div class="error-message">Пожалуйста, введите ваше имя</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="modalEmail">Email *</label>
+                <input type="email" id="modalEmail" name="email" placeholder="email@example.com">
+                <div class="error-message">Введите корректный Email</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="modalPhone">Телефон</label>
+                <input type="tel" id="modalPhone" name="phone" placeholder="+375 (__) ___-__-__">
+            </div>
+            
+            <div class="form-group">
+                <label for="modalSubject">Тема обращения *</label>
+                <select id="modalSubject" name="subject">
+                    <option value="">Выберите тему...</option>
+                    <option value="order">Вопрос по заказу</option>
+                    <option value="product">Консультация по аромату</option>
+                    <option value="delivery">Доставка и оплата</option>
+                    <option value="return">Возврат товара</option>
+                    <option value="other">Другое</option>
+                </select>
+                <div class="error-message">Выберите тему обращения</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="modalMessage">Сообщение *</label>
+                <textarea id="modalMessage" name="message" rows="4" placeholder="Ваш вопрос..."></textarea>
+                <div class="error-message">Введите сообщение</div>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <span>📩</span> Отправить сообщение
+            </button>
+        </form>
+        
+        <div class="modal-footer">
+            <p>📞 Или позвоните нам: <a href="tel:+375291234567">+375 (29) 123-45-67</a></p>
+            <p>✉️ Email: <a href="mailto:info@perfumeshop.by">info@perfumeshop.by</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Кнопка открытия -->
+<button class="help-button" id="openModal">
+    <span class="button-icon">💚</span>
+    <span class="button-text">Помощь</span>
+</button>
+<!-- === КОНЕЦ === -->
+<script>
+// === МОДАЛЬНОЕ ОКНО С ФОРМОЙ (ПР №7) ===
+$(document).ready(function() {
+    const $modal = $('#contactModal');
+    
+    // Открытие модального окна с анимацией fade in
+    $('#openModal').on('click', function() {
+        $modal.addClass('active');
+        $('body').css('overflow', 'hidden'); // Блокируем прокрутку
+        
+        // Эффект появления
+        $modal.fadeIn(300);
+    });
+    
+    // Закрытие модального окна
+    function closeModal() {
+        $modal.fadeOut(300, function() {
+            $modal.removeClass('active');
+            $('body').css('overflow', '');
+        });
+    }
+    
+    $('#closeModal').on('click', closeModal);
+    
+    // Закрытие по клику вне окна
+    $modal.on('click', function(e) {
+        if ($(e.target).is($modal)) {
+            closeModal();
+        }
+    });
+    
+    // Закрытие по Escape
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $modal.hasClass('active')) {
+            closeModal();
+        }
+    });
+    
+    // Валидация формы
+    $('#contactForm').on('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+        
+        // Проверка имени
+        const $name = $('#modalName');
+        if ($name.val().trim().length < 2) {
+            $name.addClass('error');
+            $name.next('.error-message').addClass('show').hide().fadeIn(200);
+            isValid = false;
+        } else {
+            $name.removeClass('error');
+            $name.next('.error-message').removeClass('show').fadeOut(200);
+        }
+        
+        // Проверка email
+        const $email = $('#modalEmail');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test($email.val().trim())) {
+            $email.addClass('error');
+            $email.next('.error-message').addClass('show').hide().fadeIn(200);
+            isValid = false;
+        } else {
+            $email.removeClass('error');
+            $email.next('.error-message').removeClass('show').fadeOut(200);
+        }
+        
+        // Проверка темы
+        const $subject = $('#modalSubject');
+        if ($subject.val() === '') {
+            $subject.addClass('error');
+            $subject.next('.error-message').addClass('show').hide().fadeIn(200);
+            isValid = false;
+        } else {
+            $subject.removeClass('error');
+            $subject.next('.error-message').removeClass('show').fadeOut(200);
+        }
+        
+        // Проверка сообщения
+        const $message = $('#modalMessage');
+        if ($message.val().trim().length < 10) {
+            $message.addClass('error');
+            $message.next('.error-message').addClass('show').hide().fadeIn(200);
+            isValid = false;
+        } else {
+            $message.removeClass('error');
+            $message.next('.error-message').removeClass('show').fadeOut(200);
+        }
+        
+        // Если форма невалидна - трясём окно
+        if (!isValid) {
+            $('.modal-content').effect('shake', { distance: 10, times: 3 }, 400);
+            return;
+        }
+        
+        // Успешная отправка
+        const $submitBtn = $(this).find('.submit-btn');
+        const originalText = $submitBtn.html();
+        
+        $submitBtn.html('⏳ Отправка...').prop('disabled', true);
+        
+        // Имитация отправки (здесь должен быть AJAX запрос)
+        setTimeout(function() {
+            // Показываем успешное сообщение
+            $('.contact-form').fadeOut(300, function() {
+                $(this).parent().append(`
+                    <div class="success-message" style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+                        <h3 style="color: #2c5f2d; margin-bottom: 15px; font-family: 'Cormorant Garamond', serif;">Сообщение отправлено!</h3>
+                        <p style="color: #666; margin-bottom: 20px;">Мы получили ваше сообщение и свяжемся с вами в ближайшее время.</p>
+                        <button class="submit-btn" onclick="location.reload()" style="max-width: 250px; margin: 0 auto;">
+                            Отправить ещё
+                        </button>
+                    </div>
+                `);
+            });
+            
+            // Очищаем localStorage если есть
+            localStorage.removeItem('contactFormData');
+        }, 1500);
+    });
+    
+    // Сохранение данных в localStorage при вводе
+    $('#contactForm input, #contactForm select, #contactForm textarea').on('input', function() {
+        const formData = {
+            name: $('#modalName').val(),
+            email: $('#modalEmail').val(),
+            phone: $('#modalPhone').val(),
+            subject: $('#modalSubject').val(),
+            message: $('#modalMessage').val()
+        };
+        localStorage.setItem('contactFormData', JSON.stringify(formData));
+    });
+    
+    // Восстановление данных из localStorage
+    const savedData = localStorage.getItem('contactFormData');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        $('#modalName').val(data.name || '');
+        $('#modalEmail').val(data.email || '');
+        $('#modalPhone').val(data.phone || '');
+        $('#modalSubject').val(data.subject || '');
+        $('#modalMessage').val(data.message || '');
+    }
+    
+    // Анимация полей при фокусе
+    $('.form-group input, .form-group select, .form-group textarea').on('focus', function() {
+        $(this).closest('.form-group').animate({
+            transform: 'scale(1.02)'
+        }, 200);
+    }).on('blur', function() {
+        $(this).closest('.form-group').animate({
+            transform: 'scale(1)'
+        }, 200);
+    });
+});
+</script>
 </body>
 </html>
