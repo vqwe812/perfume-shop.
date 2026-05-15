@@ -1978,48 +1978,84 @@ header, footer, .product-card, .modal-content, .cart-summary,
         bottom: 20px;
     }
 }
-/* === СТИЛИ КАРУСЕЛИ (ПР №11) === */
+/* === КАРУСЕЛЬ С УВЕЛИЧЕНИЕМ === */
 
-/* Индикаторы (кружочки) в зелёном цвете */
+/* Активный слайд увеличивается */
+#perfumeCarousel .carousel-item {
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    opacity: 0.4;
+    transform: scale(0.8);
+}
+
+#perfumeCarousel .carousel-item.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Соседние слайды меньше */
+#perfumeCarousel .carousel-item-next,
+#perfumeCarousel .carousel-item-prev {
+    opacity: 0.5;
+    transform: scale(0.85);
+}
+
+/* Контейнер карусели */
+#perfumeCarousel .carousel-inner {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Индикаторы в зелёном цвете */
 #perfumeCarousel .carousel-indicators [data-bs-target] {
     background-color: #97bc62 !important;
-    width: 12px !important;
-    height: 12px !important;
+    width: 10px !important;
+    height: 10px !important;
     border-radius: 50% !important;
     border: none !important;
-    margin: 0 4px !important;
+    margin: 0 5px !important;
+    transition: all 0.3s;
 }
 
 #perfumeCarousel .carousel-indicators .active {
     background-color: #2c5f2d !important;
     width: 14px !important;
     height: 14px !important;
+    border-radius: 50% !important;
 }
 
 /* Кнопки навигации */
 #perfumeCarousel .carousel-control-prev-icon,
 #perfumeCarousel .carousel-control-next-icon {
-    background-color: rgba(44, 95, 45, 0.7);
+    background-color: rgba(44, 95, 45, 0.8);
     border-radius: 50%;
-    padding: 20px;
-    background-size: 60% 60%;
+    padding: 25px;
+    background-size: 50% 50%;
+    transition: all 0.3s;
 }
 
 #perfumeCarousel .carousel-control-prev-icon:hover,
 #perfumeCarousel .carousel-control-next-icon:hover {
-    background-color: rgba(44, 95, 45, 0.9);
+    background-color: rgba(44, 95, 45, 1);
+    transform: scale(1.1);
 }
 
-/* Адаптивность высоты слайдов */
+/* Адаптивность */
 @media (max-width: 768px) {
-    #perfumeCarousel .carousel-item img {
-        height: 300px !important;
+    #perfumeCarousel .carousel-inner {
+        height: 350px !important;
+    }
+    #perfumeCarousel .carousel-item {
+        opacity: 1 !important;
+        transform: scale(1) !important;
     }
     #perfumeCarousel .carousel-caption {
         padding: 15px !important;
-        border-radius: 10px !important;
+        bottom: 20px !important;
     }
     #perfumeCarousel .carousel-caption h5 {
         font-size: 1.3rem !important;
+    }
+    #perfumeCarousel .carousel-caption p {
+        font-size: 0.85rem !important;
     }
 }
