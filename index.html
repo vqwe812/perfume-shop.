@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>PerfumeShop - Парфюмерный магазин</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
@@ -516,74 +518,64 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             font-size: clamp(0.7rem, 1.5vw, 0.75rem); 
         }
 
-        /* МОДАЛЬНОЕ ОКНО (адаптивное) */
-        .modal {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: rgba(0,0,0,0.4); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            padding: clamp(10px, 2vw, 20px);
-        }
-        
-        .modal.active { display: flex; }
-        
-        .modal-content {
-            background: white; 
-            border-radius: clamp(20px, 4vw, 25px); 
-            max-width: min(90%, 900px); 
-            width: 100%; 
-            max-height: 90vh;
-            overflow-y: auto; 
-            position: relative; 
-            animation: modalFadeIn 0.3s ease;
-        }
-        
-        @keyframes modalFadeIn { 
-            from { opacity: 0; transform: scale(0.95); } 
-            to { opacity: 1; transform: scale(1); } 
-        }
-        
-        .modal-close { 
-            position: absolute; 
-            top: clamp(15px, 2.5vw, 20px); 
-            right: clamp(20px, 3vw, 25px); 
-            background: none; 
-            border: none; 
-            font-size: clamp(24px, 4vw, 32px); 
-            cursor: pointer; 
-            color: #888; 
-            z-index: 10; 
-        }
-        
-        .modal-close:hover { color: var(--primary-color); }
-        
-        .modal-body { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: clamp(25px, 4vw, 40px); 
-            padding: clamp(25px, 4vw, 40px); 
-        }
-        
-        .modal-image { 
-            background: #f8f9fa; 
-            border-radius: clamp(15px, 3vw, 20px); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: clamp(20px, 3vw, 30px); 
-            height: clamp(300px, 50vh, 450px); 
-            position: relative; 
-        }
-        
-        .modal-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+/* МОДАЛЬНОЕ ОКНО — ЦЕНТРИРОВАНИЕ */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    z-index: 99999;
+    
+    /* Flexbox для центрирования */
+    align-items: center;
+    justify-content: center;
+    
+    /* Отступы для мобильных */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.modal.active {
+    display: flex !important;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 850px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    margin: auto; /* Центрирование */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalPop 0.3s ease;
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 100%;
+        max-height: 95vh;
+        border-radius: 15px;
+    }
+    .modal-body {
+        grid-template-columns: 1fr !important;
+        padding: 20px 15px !important;
+    }
+    .modal-image {
+        height: 200px !important;
+    }
+}
         
         .modal-fav-btn {
             position: absolute; 
@@ -863,6 +855,145 @@ footer { background: var(--footer-bg); color: var(--footer-text); }
             </div>
         </div>
     </header>
+<!-- === КАРУСЕЛЬ BOOTSTRAP (ПР №11 Задания 1-2) === -->
+<section class="container my-5">
+    <h2 class="text-center mb-4 fw-bold" style="font-family: 'Cormorant Garamond', serif; color: #2c5f2d;">
+        ✨ Коллекции сезона
+    </h2>
+    
+    <div id="perfumeCarousel" class="carousel slide shadow rounded-4" data-bs-ride="carousel">
+        
+        <!-- Индикаторы (кружочки внизу) -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Слайд 1"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="1" aria-label="Слайд 2"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="2" aria-label="Слайд 3"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="3" aria-label="Слайд 4"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="4" aria-label="Слайд 5"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="5" aria-label="Слайд 6"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="6" aria-label="Слайд 7"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="7" aria-label="Слайд 8"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="8" aria-label="Слайд 9"></button>
+            <button type="button" data-bs-target="#perfumeCarousel" data-bs-slide-to="9" aria-label="Слайд 10"></button>
+        </div>
+
+        <!-- Слайды -->
+        <div class="carousel-inner rounded-4">
+            
+            <!-- Слайд 1 -->
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Chanel" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Chanel №5</h5>
+                    <p class="mb-0">Легендарный аромат с нотами жасмина и розы</p>
+                    <span class="badge bg-light text-success mt-2">420 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 2 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1594035910387-fea477942653?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Dior" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Dior J'adore</h5>
+                    <p class="mb-0">Цветочная композиция с оттенками ванили</p>
+                    <span class="badge bg-light text-success mt-2">330 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 3 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Gucci" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Gucci Bloom</h5>
+                    <p class="mb-0">Свежий букет из туберозы и жасмина</p>
+                    <span class="badge bg-light text-success mt-2">285 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 4 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="YSL" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">YSL Libre</h5>
+                    <p class="mb-0">Смелый аромат свободы с нотами лаванды</p>
+                    <span class="badge bg-light text-success mt-2">345 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 5 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Tom Ford" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Tom Ford Black Orchid</h5>
+                    <p class="mb-0">Роскошный унисекс с трюфелем и орхидеей</p>
+                    <span class="badge bg-light text-success mt-2">480 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 6 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1615634260167-c8c685e6c6f3?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Versace" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Versace Eros</h5>
+                    <p class="mb-0">Страстный мужской аромат с мятой и ванилью</p>
+                    <span class="badge bg-light text-success mt-2">360 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 7 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1523293188086-b589b9b4f8b4?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Lancôme" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Lancôme La Vie Est Belle</h5>
+                    <p class="mb-0">Гимн женскому счастью с ирисом и пралине</p>
+                    <span class="badge bg-light text-success mt-2">395 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 8 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Carolina Herrera" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Carolina Herrera Good Girl</h5>
+                    <p class="mb-0">Двойственная природа в одном флаконе</p>
+                    <span class="badge bg-light text-success mt-2">385 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 9 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1594035910387-fea477942653?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Paco Rabanne" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Paco Rabanne 1 Million</h5>
+                    <p class="mb-0">Золотой аромат успеха с кожей и амброй</p>
+                    <span class="badge bg-light text-success mt-2">325 BYN</span>
+                </div>
+            </div>
+
+            <!-- Слайд 10 -->
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=1200&auto=format&fit=crop&q=80" class="d-block w-100" alt="Jean Paul Gaultier" style="height: 500px; object-fit: cover;">
+                <div class="carousel-caption d-none d-md-block" style="background: rgba(44, 95, 45, 0.85); border-radius: 15px; padding: 20px;">
+                    <h5 class="fw-bold" style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;">Jean Paul Gaultier Le Male</h5>
+                    <p class="mb-0">Культовый мужской аромат с лавандой и ванилью</p>
+                    <span class="badge bg-light text-success mt-2">355 BYN</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Кнопки навигации -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#perfumeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Назад</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#perfumeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Вперед</span>
+        </button>
+    </div>
+</section>
+<!-- === КОНЕЦ КАРУСЕЛИ === -->
 <!-- === АНИМИРОВАННЫЙ БАННЕР (ПР №7 Задание 2 - Premium Version) === -->
 <section class="premium-banner" id="mainBanner">
     <!-- Слайд 1 -->
@@ -1895,5 +2026,7 @@ $(document).ready(function() {
     });
 });
 </script>
+<!-- Bootstrap 5 JS (включает Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
